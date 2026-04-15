@@ -37,7 +37,7 @@ const CONFIG = {
 
   // TODO: Replace 'GA_MEASUREMENT_ID' with your actual GA4 Measurement ID.
   // Format: 'G-XXXXXXXXXX'
-  ga4MeasurementId: 'GA_MEASUREMENT_ID',
+  ga4MeasurementId: 'G-F3RXV3BT7F',
 
   // TODO: Azure Function endpoint (for future use, e.g. form submission or lead capture).
   // Uncomment and set when you have a function deployed.
