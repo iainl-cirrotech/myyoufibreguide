@@ -455,6 +455,20 @@ h3 { font-size: 1.05rem; }
   background: linear-gradient(155deg, var(--colour-primary) 0%, var(--colour-primary-dark) 100%);
 }
 
+/* Inline referral card section — sits between Why I Switched and Household Usage.
+   Tighter vertical padding so it reads as a natural bridge, not a full section. */
+.section--referral-inline {
+  padding-block: var(--space-xl);
+  background-color: var(--colour-bg-alt);
+  display: flex;
+  justify-content: center;
+}
+
+.section--referral-inline .container {
+  display: flex;
+  justify-content: center;
+}
+
 .section__title {
   margin-bottom: var(--space-lg);
 }
