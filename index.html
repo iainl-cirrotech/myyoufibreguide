@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- =============================================
+       PAGE TITLE & SEO
+       Update the title/description to match your final copy
+  ============================================= -->
+  <title>YouFibre Review &amp; Referral | Honest Guide from an IT Consultant in Glasgow</title>
+  <meta name="description" content="Honest YouFibre review from an IT consultant in Glasgow. Two years of reliable full-fibre broadband with a demanding home network setup. Referral code KCR5KH &mdash; conditions apply.">
+
+  <!-- =============================================
+       OPEN GRAPH (Social sharing preview)
+       Update og:url once your domain is confirmed.
+       Add og:image once you have a suitable photo.
+  ============================================= -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="YouFibre Review | Honest Guide from an IT Consultant in Glasgow">
+  <meta property="og:description" content="Two years of YouFibre experience from an IT professional who works from home. Demanding setup, solid results. Use referral code KCR5KH.">
+  <!-- TODO: Update og:url with your actual domain -->
+  <meta property="og:url" content="https://youfibreguide.com">
+  <!-- TODO: Add og:image once you have a suitable photo (recommended: 1200x630px) -->
+  <!-- <meta property="og:image" content="https://youfibreguide.com/images/og-image.jpg"> -->
+
+  <!-- =============================================
+       GOOGLE ANALYTICS 4
+       1. Create a GA4 property at analytics.google.com
+       2. Copy your Measurement ID (format: G-XXXXXXXXXX)
+       3. Replace GA_MEASUREMENT_ID in both places below
+       4. Uncomment the two script blocks
+  ============================================= -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  -->
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =============================================
+       INDEPENDENCE NOTICE BAR
+       Static top-of-page bar making it immediately clear this is
+       an independent personal review, not an official YouFibre site.
+  ============================================= -->
+  <div class="independence-bar" role="note">
+    <span>Independent personal review &mdash; not affiliated with YouFibre Ltd.</span>
+    <a href="#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <!-- =============================================
+       STICKY MOBILE CTA BAR
+       Fixed to the bottom on mobile. Hidden on desktop.
+       Becomes visible after user scrolls past the hero section.
+       TODO: Update the href on the anchor when your referral URL is known.
+  ============================================= -->
+  <div class="sticky-cta" id="stickyCta" role="complementary" aria-label="Referral code quick access">
+    <span class="sticky-cta__code">Code: <strong>KCR5KH</strong></span>
+    <a href="#" class="btn btn--primary btn--sm" id="stickyReferralBtn" onclick="trackReferralClick()">
+      Use My Code
+    </a>
+    <button class="btn btn--secondary btn--sm" onclick="copyReferralCode()" aria-label="Copy referral code to clipboard">
+      Copy
+    </button>
+  </div>
+
+  <!-- =============================================
+       SITE HEADER
+  ============================================= -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <span class="site-header__logo">YouFibre<span class="accent">Guide</span></span>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="#review">Review</a>
+          <a href="#setup">Setup</a>
+          <a href="#referral">Referral</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- =============================================
+         SECTION 1: HERO
+    ============================================= -->
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero__inner">
+
+          <div class="hero__tag" aria-hidden="true">Personal Review</div>
+
+          <h1 class="hero__headline" id="hero-heading">
+            Two years of YouFibre.<br>Here's my honest take.
+          </h1>
+
+          <p class="hero__subheadline">
+            I'm Iain, an IT consultant based in Glasgow, working from home full-time.
+            Reliable, low-latency internet isn't a convenience for me — it's
+            essential. This is my genuine experience after switching to YouFibre.
+          </p>
+
+          <!-- Referral code card in hero -->
+          <div class="referral-card referral-card--hero">
+            <p class="referral-card__label">My referral code</p>
+            <div class="referral-card__code" aria-label="Referral code: KCR5KH">KCR5KH</div>
+            <div class="referral-card__actions">
+              <!-- TODO: Replace href="#" with your actual YouFibre referral sign-up link -->
+              <a href="#" class="btn btn--primary" id="heroReferralBtn" onclick="trackReferralClick()">
+                Use My Referral Code
+              </a>
+              <button class="btn btn--secondary" onclick="copyReferralCode()" aria-label="Copy referral code to clipboard">
+                Copy Code
+              </button>
+            </div>
+            <p class="referral-card__tracking-note">
+              For the best chance of the referral being tracked, use the button above rather
+              than entering the code manually.
+            </p>
+            <p class="referral-card__disclaimer">
+              * Both parties may receive a reward after a successful installation and once the
+              first bill has been paid. New customers only. Check YouFibre's current terms
+              for details — reward amounts can change.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 2: WHY I SWITCHED / MY EXPERIENCE
+    ============================================= -->
+    <section class="section" id="review" aria-labelledby="review-heading">
+      <div class="container">
+        <article class="card">
+          <h2 class="section__title" id="review-heading">Why I switched to YouFibre</h2>
+
+          <p>
+            I've been an IT consultant working out of my home office in Glasgow for several
+            years. For me, internet connectivity isn't optional — if I'm offline, I can't
+            work, and that has a direct impact on my clients and my income.
+          </p>
+          <p>
+            Before YouFibre, I went through the usual progression: ADSL, then FTTC, then a
+            couple of different cable and fibre providers. Each had its own problems —
+            latency spikes during peak hours, inconsistent speeds, and poor support when
+            things went wrong. I was constantly monitoring my connection and planning
+            workarounds just in case.
+          </p>
+          <p>
+            When YouFibre started rolling out in my area, I looked at the specs carefully.
+            Full-fibre to the premises (FTTP) with symmetrical upload and download speeds
+            was exactly what I needed for video calls, remote desktop sessions, and hosting
+            my own services.
+          </p>
+          <p>
+            The difference compared to my previous ISPs has been night and day. In over two
+            years, I can count the significant outages on one hand — and even those were
+            short-lived and communicated clearly.
+          </p>
+          <p>
+            My setup uses a custom <strong>OPNsense router</strong> with a
+            <strong>10Gb Ethernet</strong> network throughout the house. Most ISPs have been
+            awkward about non-standard router setups. YouFibre has been perfectly
+            straightforward — I plugged in my own equipment and got on with it.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 3: HOUSEHOLD USAGE
+    ============================================= -->
+    <section class="section section--alt" aria-labelledby="household-heading">
+      <div class="container">
+        <article class="card">
+          <h2 class="section__title" id="household-heading">Day-to-day household use</h2>
+
+          <p>
+            It's not just a work setup. The connection handles a busy household without
+            breaking a sweat. Phones, laptops, tablets, smart TVs, and consoles are all
+            connected — often simultaneously.
+          </p>
+
+          <ul class="feature-list">
+            <li>4K streaming on multiple devices at the same time — no buffering or quality drops</li>
+            <li>Video calls and screen sharing without lag or unexpected disconnections</li>
+            <li>Online gaming without the latency issues that used to be a regular frustration</li>
+            <li>Large file transfers and cloud backups running in the background without affecting anything else</li>
+            <li>No slowdowns during peak evening hours — something we used to suffer with regularly on previous providers</li>
+          </ul>
+
+          <p>
+            The symmetrical speeds make a real difference. Uploading large files — whether
+            that's client deliverables, media, or backups — used to be a bottleneck with
+            asymmetric broadband. That problem simply doesn't exist anymore.
+          </p>
+          <p class="section__soft-nudge">
+            If any of this sounds like your household, you can <a href="#referral">use my referral code</a> when you sign up.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 4: ADVANCED SETUP / POWER USER
+    ============================================= -->
+    <section class="section" aria-labelledby="advanced-heading">
+      <div class="container">
+        <article class="card">
+          <h2 class="section__title" id="advanced-heading">A more demanding setup</h2>
+
+          <p>
+            My usage goes a bit beyond the average household. YouFibre has handled
+            everything without complaint.
+          </p>
+
+          <div class="feature-grid">
+
+            <div class="feature-item">
+              <div class="feature-item__icon" aria-hidden="true">🌐</div>
+              <h3>Static Public IP</h3>
+              <p>
+                I run a static IP address, which allows me to host services reliably from
+                home. YouFibre offer this as an add-on, and it just works.
+              </p>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-item__icon" aria-hidden="true">🖥️</div>
+              <h3>Self-hosted Websites</h3>
+              <p>
+                Several personal projects and websites are hosted directly from my network.
+                Uptime has been excellent — no complaints from visitors about availability.
+              </p>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-item__icon" aria-hidden="true">📧</div>
+              <h3>Own Email Server</h3>
+              <p>
+                Running your own mail server requires a stable, reliable connection.
+                Two years in, I haven't had a deliverability issue that was down to
+                connectivity.
+              </p>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-item__icon" aria-hidden="true">🔧</div>
+              <h3>Custom Router (OPNsense)</h3>
+              <p>
+                YouFibre doesn't require you to use their hardware. My OPNsense build
+                handles routing, firewall rules, VLANs, and VPN — with no friction from
+                the ISP's side.
+              </p>
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 5: MY INSTALL & SETUP (IMAGE SECTION)
+         TODO: Replace image src paths in /images/ with your real photos.
+         Recommended image dimensions: 1200×800px or similar landscape format.
+    ============================================= -->
+    <section class="section section--alt" id="setup" aria-labelledby="setup-heading">
+      <div class="container">
+
+        <h2 class="section__title" id="setup-heading">My Install &amp; Setup</h2>
+        <p class="section__intro">
+          Here's what the install looked like and how the final setup turned out.
+          In my experience, the engineers were professional and did a clean job.
+        </p>
+
+        <!-- Subsection A: Installation in Progress -->
+        <div class="image-section">
+          <h3 class="image-section__title">Installation in Progress</h3>
+          <div class="image-grid">
+            <!-- TODO: Replace src with your actual photo path, e.g. images/install-1.jpg -->
+            <figure class="image-card">
+              <a href="images/install-1.jpg" class="lightbox-trigger" aria-label="View full size: Network rack installation in progress">
+                <img
+                  src="images/install-1.jpg"
+                  alt="Network rack installation in progress"
+                  class="image-card__img"
+                  loading="lazy"
+                  width="600"
+                  height="400"
+                >
+              </a>
+            </figure>
+            <!-- TODO: Replace src with your actual photo path, e.g. images/install-2.jpg -->
+            <figure class="image-card">
+              <a href="images/install-2.jpg" class="lightbox-trigger" aria-label="View full size: Ethernet cabling and patch panel setup">
+                <img
+                  src="images/install-2.jpg"
+                  alt="Ethernet cabling and patch panel setup"
+                  class="image-card__img"
+                  loading="lazy"
+                  width="600"
+                  height="400"
+                >
+              </a>
+            </figure>
+          </div>
+          <p class="image-section__caption">
+            Initial install and structured cabling into a patch panel.
+          </p>
+        </div>
+
+        <!-- Subsection B: Cabling & Setup -->
+        <div class="image-section">
+          <h3 class="image-section__title">Cabling &amp; Setup</h3>
+          <div class="image-grid image-grid--single">
+            <!-- TODO: Replace src with your actual photo path, e.g. images/cabling-1.jpg -->
+            <figure class="image-card">
+              <a href="images/cabling-1.jpg" class="lightbox-trigger" aria-label="View full size: Structured cabling and patch panel">
+                <img
+                  src="images/cabling-1.jpg"
+                  alt="Structured cabling and patch panel"
+                  class="image-card__img"
+                  loading="lazy"
+                  width="600"
+                  height="400"
+                >
+              </a>
+            </figure>
+          </div>
+          <p class="image-section__caption">
+            Cabling runs to multiple rooms and is terminated cleanly for full performance.
+          </p>
+        </div>
+
+        <!-- Subsection C: Final Rack Setup -->
+        <div class="image-section">
+          <h3 class="image-section__title">Final Rack Setup</h3>
+          <div class="image-grid image-grid--single">
+            <!-- TODO: Replace src with your actual photo path, e.g. images/final-rack.jpg -->
+            <figure class="image-card">
+              <a href="images/final-rack.jpg" class="lightbox-trigger" aria-label="View full size: Finished home network rack with router and switch">
+                <img
+                  src="images/final-rack.jpg"
+                  alt="Finished home network rack with router and switch"
+                  class="image-card__img"
+                  loading="lazy"
+                  width="600"
+                  height="400"
+                >
+              </a>
+            </figure>
+          </div>
+          <p class="image-section__caption">
+            Final setup with router, switch, and patch panel neatly organised.
+          </p>
+        </div>
+
+        <!-- Transition nudge towards the referral section -->
+        <p class="section__transition-cta">
+          If you're considering switching, you can <a href="#referral">use my referral code below</a>.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 6: WHY I RECOMMEND IT
+    ============================================= -->
+    <section class="section" aria-labelledby="recommend-heading">
+      <div class="container">
+        <article class="card">
+          <h2 class="section__title" id="recommend-heading">Why I recommend YouFibre</h2>
+
+          <p>
+            I don't recommend things unless I genuinely use them. Here's the short version
+            of why I think YouFibre is worth considering:
+          </p>
+
+          <ul class="recommend-list">
+            <li>
+              <strong>Reliable for working from home</strong> — Two years in, it's become
+              the one part of my setup I don't have to think about. That's exactly what I
+              want from an internet connection.
+            </li>
+            <li>
+              <strong>Handles a busy household</strong> — Multiple simultaneous streams,
+              calls, and downloads without any noticeable degradation.
+            </li>
+            <li>
+              <strong>Supports advanced setups</strong> — Custom routers, static IPs,
+              self-hosted services. It's not locked down or awkward for those who know what
+              they're doing.
+            </li>
+            <li>
+              <strong>Better than my previous ISPs</strong> — Not a close comparison.
+              The consistency and performance are in a different league.
+            </li>
+            <li>
+              <strong>Fair pricing</strong> — Full-fibre at a competitive price point.
+              Using a referral may also earn both of us a reward after sign-up — see the
+              referral section below for details.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 7: REFERRAL SECTION (MAIN CTA)
+         TODO: Replace href="#" on referral buttons with your actual YouFibre referral URL.
+         This is managed centrally in script.js via CONFIG.referralUrl.
+    ============================================= -->
+    <section class="section section--cta" id="referral" aria-labelledby="referral-heading">
+      <div class="container">
+        <div class="referral-block">
+
+          <h2 class="referral-block__title" id="referral-heading">Use my referral code</h2>
+
+          <p class="referral-block__intro">
+            If you're considering signing up for YouFibre, you're welcome to use my
+            referral code. This is available to <strong>new YouFibre customers only</strong>.
+            Both of us may receive a reward — typically a credit or payment — once your
+            installation is complete and your first bill has been paid.
+          </p>
+
+          <ol class="how-it-works" aria-label="How the referral works">
+            <li>Click the sign-up button below — this sets the referral tracking automatically</li>
+            <li>Complete your YouFibre sign-up as normal</li>
+            <li>Get installed and pay your first bill</li>
+            <li>Both of us should receive our reward — Aklamio (YouFibre's referral platform) will email you a confirmation</li>
+          </ol>
+
+          <p class="referral-block__note">
+            <strong>Use the button, not just the code.</strong> Signing up via the link
+            below is the most reliable way to ensure the referral is tracked correctly.
+            The code is a manual fallback only.
+          </p>
+
+          <div class="referral-card">
+            <p class="referral-card__label">Referral code</p>
+            <div class="referral-card__code" aria-label="Referral code: KCR5KH">KCR5KH</div>
+            <div class="referral-card__actions">
+              <!-- TODO: Replace href="#" with your actual YouFibre referral sign-up link -->
+              <!-- This is also managed via CONFIG.referralUrl in script.js -->
+              <a href="#" class="btn btn--primary btn--lg" id="mainReferralBtn" onclick="trackReferralClick()">
+                Sign Up via My Referral Link
+              </a>
+              <button class="btn btn--secondary btn--lg" onclick="copyReferralCode()" aria-label="Copy referral code to clipboard">
+                Copy Code
+              </button>
+            </div>
+          </div>
+
+          <p class="referral-block__terms">
+            New customers only. Rewards are subject to YouFibre's referral terms, managed
+            by Aklamio. Both parties must have active accounts. Reward amounts may vary —
+            always check the current terms on YouFibre's website before signing up. If you
+            have a query about a reward, look for a confirmation email from Aklamio.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION 8: MY HOME NETWORK SETUP (AFFILIATE)
+         TODO: Replace each href="#" with your actual Amazon affiliate links.
+         Update the affiliate disclaimer text to match your legal requirements.
+    ============================================= -->
+    <section class="section" id="network-setup" aria-labelledby="gear-heading">
+      <div class="container">
+        <article class="card">
+          <h2 class="section__title" id="gear-heading">My Home Network Setup</h2>
+
+          <p>
+            For those who are curious, here's the hardware I use alongside YouFibre.
+          </p>
+
+          <p class="affiliate-disclaimer affiliate-disclaimer--inline">
+            <strong>Affiliate disclosure:</strong> The links below may be affiliate links —
+            I may earn a small commission if you buy through them, at no extra cost to you.
+            I only link to products I actually use or have used.
+          </p>
+
+          <ul class="gear-list">
+
+            <li class="gear-item">
+              <div class="gear-item__info">
+                <h3 class="gear-item__name">OPNsense Router (Custom Build)</h3>
+                <p class="gear-item__desc">
+                  My main router, running OPNsense on custom hardware. Handles routing,
+                  firewall rules, VLANs, and VPN.
+                </p>
+              </div>
+              <!-- TODO: OPNsense is open-source software, not a single product.
+                   Link to the specific hardware appliance you actually use
+                   (e.g. Protectli Vault, Topton mini PC). Do not link generically. -->
+              <a href="#" class="btn btn--outline btn--sm affiliate-link">View Hardware</a>
+            </li>
+
+            <li class="gear-item">
+              <div class="gear-item__info">
+                <h3 class="gear-item__name">10Gb Managed Network Switch</h3>
+                <p class="gear-item__desc">
+                  Core switch for the home network, with 10Gb uplinks for the server
+                  and NAS.
+                </p>
+              </div>
+              <!-- TODO: Replace href="#" with your Amazon affiliate link -->
+              <a href="#" class="btn btn--outline btn--sm affiliate-link">View on Amazon</a>
+            </li>
+
+            <li class="gear-item">
+              <div class="gear-item__info">
+                <h3 class="gear-item__name">Wi-Fi 6 Access Points</h3>
+                <p class="gear-item__desc">
+                  Ceiling-mounted access points throughout the house for consistent,
+                  solid wireless coverage.
+                </p>
+              </div>
+              <!-- TODO: Replace href="#" with your Amazon affiliate link -->
+              <a href="#" class="btn btn--outline btn--sm affiliate-link">View on Amazon</a>
+            </li>
+
+            <li class="gear-item">
+              <div class="gear-item__info">
+                <h3 class="gear-item__name">Cat6A Ethernet Cabling</h3>
+                <p class="gear-item__desc">
+                  Structured cabling throughout the house, terminated into a patch panel
+                  in a wall cabinet.
+                </p>
+              </div>
+              <!-- TODO: Replace href="#" with your Amazon affiliate link -->
+              <a href="#" class="btn btn--outline btn--sm affiliate-link">View on Amazon</a>
+            </li>
+
+            <li class="gear-item">
+              <div class="gear-item__info">
+                <h3 class="gear-item__name">Wall-Mounted Network Cabinet</h3>
+                <p class="gear-item__desc">
+                  Compact rack cabinet to house the patch panel, switch, and router
+                  cleanly in one place.
+                </p>
+              </div>
+              <!-- TODO: Replace href="#" with your Amazon affiliate link -->
+              <a href="#" class="btn btn--outline btn--sm affiliate-link">View on Amazon</a>
+            </li>
+
+          </ul>
+
+          <!-- TODO: Update affiliate disclaimer to match your legal requirements -->
+          <p class="affiliate-disclaimer">
+            <strong>Affiliate disclosure:</strong> Some links on this page may be affiliate
+            links. If you make a purchase through these links, I may earn a small commission
+            at no extra cost to you. I only link to products I actually use or have used.
+          </p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =============================================
+       FOOTER
+       TODO: Add links to your Privacy Policy and Cookie Policy pages once created.
+       These are important for GDPR/UK GDPR compliance if you're using analytics.
+       TODO: Update the affiliate disclosure link/text to match your requirements.
+  ============================================= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <!-- TODO: Replace # with links to your Privacy Policy and Cookie Policy pages -->
+          <a href="#">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="#">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <!-- TODO: Update this affiliate disclosure text to match your legal requirements -->
+        <p class="site-footer__affiliate">
+          Some links on this site may be affiliate links. See the affiliate disclosure
+          section above for full details.
+        </p>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide &mdash; Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       COPY NOTIFICATION TOAST
+       Shown briefly after the referral code is copied to clipboard.
+  ============================================= -->
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <!-- =============================================
+       COOKIE CONSENT BANNER
+       GA4 is only loaded after the user explicitly accepts.
+       IMPORTANT: Do not enable GA4 without this mechanism in place.
+       Controlled by initCookieConsent() in script.js.
+  ============================================= -->
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it — nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       LIGHTBOX OVERLAY
+       Visibility is controlled by the .is-open class
+       (added/removed by script.js). No manual edits needed.
+  ============================================= -->
+  <div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close image viewer">&times;</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

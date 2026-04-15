@@ -1,0 +1,1193 @@
+/* =============================================
+   styles.css
+   YouFibreGuide — Mobile-first stylesheet
+   =============================================
+
+   Table of contents:
+   1.  CSS Custom Properties (Design Tokens)
+   2.  Reset & Base
+   3.  Layout
+   4.  Typography
+   5.  Buttons
+   6.  Site Header
+   7.  Hero Section
+   8.  Referral Card
+   9.  Content Sections
+   10. Feature List
+   11. Feature Grid
+   12. Image Sections
+   13. Recommend List
+   14. Referral Block (Section 7 CTA)
+   15. Gear / Affiliate List
+   16. Site Footer
+   17. Sticky Mobile CTA Bar
+   18. Toast Notification
+   19. Desktop Enhancements (min-width: 768px)
+   20. Accessibility — Focus Styles
+   21. Print Styles
+============================================= */
+
+
+/* =============================================
+   1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   Centralised values — update colours here to
+   retheme the entire site.
+============================================= */
+:root {
+  /* Colours */
+  --colour-primary:       #0055a5;   /* Main brand blue */
+  --colour-primary-dark:  #003d7a;   /* Hover/active state */
+  --colour-primary-light: #e6f0fa;   /* Light tint for backgrounds */
+  --colour-text:          #18181b;   /* Near-black body text */
+  --colour-text-muted:    #52525b;   /* Secondary/caption text */
+  --colour-bg:            #ffffff;
+  --colour-bg-alt:        #f4f6f9;   /* Section alternating background */
+  --colour-border:        #dde1e9;
+  --colour-white:         #ffffff;
+
+  /* Typography */
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                 Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --line-height-base:    1.65;
+  --line-height-heading: 1.2;
+
+  /* Spacing scale */
+  --space-xs:  0.25rem;   /*  4px */
+  --space-sm:  0.5rem;    /*  8px */
+  --space-md:  1rem;      /* 16px */
+  --space-lg:  1.5rem;    /* 24px */
+  --space-xl:  2rem;      /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4.5rem;    /* 72px */
+
+  /* Layout */
+  --container-max:  860px;
+  --radius:         0.5rem;
+  --radius-lg:      1rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.13);
+}
+
+
+/* =============================================
+   2. RESET & BASE
+============================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: var(--line-height-base);
+  color: var(--colour-text);
+  background-color: var(--colour-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--colour-primary);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--colour-primary-dark);
+}
+
+ul,
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Consecutive paragraphs get top margin */
+p + p {
+  margin-top: var(--space-md);
+}
+
+
+/* =============================================
+   3. LAYOUT
+============================================= */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+
+/* =============================================
+   4. TYPOGRAPHY
+============================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--line-height-heading);
+  color: var(--colour-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Fluid heading sizes — scale smoothly with viewport */
+h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); }
+h2 { font-size: clamp(1.3rem, 3.5vw, 1.875rem); }
+h3 { font-size: 1.05rem; }
+
+
+/* =============================================
+   5. BUTTONS
+============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.1s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary */
+.btn--primary {
+  background-color: var(--colour-primary);
+  color: var(--colour-white);
+  border-color: var(--colour-primary);
+}
+.btn--primary:hover {
+  background-color: var(--colour-primary-dark);
+  border-color: var(--colour-primary-dark);
+  color: var(--colour-white);
+  text-decoration: none;
+}
+
+/* Secondary (outlined, primary colour) */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--colour-primary);
+  border-color: var(--colour-primary);
+}
+.btn--secondary:hover {
+  background-color: var(--colour-primary-light);
+  color: var(--colour-primary);
+  text-decoration: none;
+}
+
+/* Outline (neutral, used for affiliate links) */
+.btn--outline {
+  background-color: transparent;
+  color: var(--colour-text-muted);
+  border-color: var(--colour-border);
+  font-weight: 500;
+}
+.btn--outline:hover {
+  border-color: var(--colour-primary);
+  color: var(--colour-primary);
+  text-decoration: none;
+}
+
+/* Size modifiers */
+.btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+.btn--lg {
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+}
+
+
+/* =============================================
+   5b. INDEPENDENCE NOTICE BAR
+   Thin banner at the top of the page. Scrolls away
+   with the content — not fixed. Clearly signals this
+   is not an official YouFibre site.
+============================================= */
+.independence-bar {
+  background-color: #fffbea;
+  border-bottom: 1px solid #f0d060;
+  padding: 0.5rem var(--space-lg);
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--colour-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  line-height: 1.5;
+}
+
+.independence-bar__link {
+  color: var(--colour-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+
+/* =============================================
+   6. SITE HEADER
+============================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--colour-white);
+  border-bottom: 1px solid var(--colour-border);
+  padding-block: var(--space-md);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.site-header__logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--colour-text);
+  letter-spacing: -0.03em;
+}
+
+/* Accent colour on the second part of the logo word */
+.site-header__logo .accent {
+  color: var(--colour-primary);
+}
+
+.site-header__nav {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.site-header__nav a {
+  color: var(--colour-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.18s ease;
+}
+
+.site-header__nav a:hover {
+  color: var(--colour-primary);
+}
+
+/* Hide nav on very small screens to keep the header uncluttered */
+@media (max-width: 360px) {
+  .site-header__nav {
+    display: none;
+  }
+}
+
+
+/* =============================================
+   7. HERO SECTION
+============================================= */
+.hero {
+  background: linear-gradient(155deg, var(--colour-primary-light) 0%, var(--colour-white) 55%);
+  padding-block: var(--space-3xl) var(--space-2xl);
+  border-bottom: 1px solid var(--colour-border);
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* Small label pill above the headline */
+.hero__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.85rem;
+  background-color: var(--colour-primary);
+  color: var(--colour-white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.hero__headline {
+  font-size: clamp(1.75rem, 5.5vw, 2.75rem);
+  letter-spacing: -0.03em;
+  max-width: 600px;
+}
+
+.hero__subheadline {
+  font-size: 1.1rem;
+  color: var(--colour-text-muted);
+  max-width: 580px;
+  margin-top: 0; /* Override the p+p rule */
+}
+
+
+/* =============================================
+   8. REFERRAL CARD
+   Used in hero and in the referral section
+============================================= */
+.referral-card {
+  background-color: var(--colour-white);
+  border: 2px solid var(--colour-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-md);
+}
+
+/* Constrain card width in the hero */
+.referral-card--hero {
+  max-width: 460px;
+}
+
+.referral-card__label {
+  font-size: 0.75rem;
+  color: var(--colour-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* The referral code itself — large, monospaced, easy to read */
+.referral-card__code {
+  font-size: clamp(2.25rem, 9vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--colour-primary);
+  font-family: 'Courier New', Courier, monospace;
+  /* Make it easy to select and manually copy */
+  user-select: all;
+  cursor: default;
+}
+
+.referral-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  width: 100%;
+}
+
+.referral-card__disclaimer {
+  font-size: 0.8rem;
+  color: var(--colour-text-muted);
+  margin: 0;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* Info note shown between the CTA buttons and the small print */
+.referral-card__tracking-note {
+  font-size: 0.8rem;
+  color: var(--colour-primary);
+  font-weight: 600;
+  margin: 0;
+  max-width: 420px;
+  line-height: 1.5;
+  background-color: var(--colour-primary-light);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 85, 165, 0.2);
+  text-align: center;
+}
+
+
+/* =============================================
+   9. CONTENT SECTIONS
+============================================= */
+.section {
+  padding-block: var(--space-3xl);
+}
+
+.section--alt {
+  background-color: var(--colour-bg-alt);
+}
+
+/* Dark blue gradient background for the main CTA section */
+.section--cta {
+  background: linear-gradient(155deg, var(--colour-primary) 0%, var(--colour-primary-dark) 100%);
+}
+
+.section__title {
+  margin-bottom: var(--space-lg);
+}
+
+.section__intro {
+  font-size: 1.05rem;
+  color: var(--colour-text-muted);
+  margin-bottom: var(--space-2xl);
+}
+
+/* Card component — white box with subtle border and shadow */
+.card {
+  background-color: var(--colour-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--colour-border);
+}
+
+/* Soft nudge paragraph at the bottom of a content card */
+.section__soft-nudge {
+  margin-top: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--colour-primary-light);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: var(--colour-text-muted);
+  border: 1px solid rgba(0, 85, 165, 0.15);
+}
+
+.section__soft-nudge a {
+  color: var(--colour-primary);
+  font-weight: 600;
+}
+
+
+/* =============================================
+   10. FEATURE LIST (tick bullets, sections 3 & 6)
+============================================= */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-block: var(--space-lg);
+}
+
+.feature-list li {
+  padding-left: var(--space-xl);
+  position: relative;
+  color: var(--colour-text);
+}
+
+.feature-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--colour-primary);
+  font-weight: 700;
+}
+
+
+/* =============================================
+   11. FEATURE GRID (advanced setup, section 4)
+============================================= */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+@media (min-width: 520px) {
+  .feature-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.feature-item {
+  background-color: var(--colour-bg-alt);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  border: 1px solid var(--colour-border);
+}
+
+.feature-item__icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+  /* Emoji icons are decorative — hidden from screen readers via aria-hidden in HTML */
+}
+
+.feature-item h3 {
+  font-size: 0.95rem;
+  margin-bottom: var(--space-xs);
+}
+
+.feature-item p {
+  font-size: 0.875rem;
+  color: var(--colour-text-muted);
+  margin: 0;
+}
+
+
+/* =============================================
+   12. IMAGE SECTIONS (section 5)
+============================================= */
+.image-section {
+  margin-bottom: var(--space-3xl);
+}
+
+.image-section:last-child {
+  margin-bottom: 0;
+}
+
+.image-section__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--colour-text);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--colour-border);
+}
+
+.image-section__caption {
+  margin-top: var(--space-md);
+  font-size: 0.875rem;
+  color: var(--colour-text-muted);
+  font-style: italic;
+}
+
+/* Image grid — one column on mobile, two on wider screens */
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 520px) {
+  .image-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Single-image subsections stay narrower */
+  .image-grid--single {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+}
+
+/* Individual image card */
+.image-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--colour-border);
+  /* Placeholder background shown when image hasn't loaded */
+  background-color: var(--colour-bg-alt);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.image-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.image-card__img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  /* Subtle grey placeholder shown before images load or if src is missing */
+  background-color: var(--colour-border);
+  transition: opacity 0.18s ease;
+}
+
+/* Lightbox trigger — zoom cursor hints that images are clickable */
+.lightbox-trigger {
+  display: block;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+
+.lightbox-trigger:hover .image-card__img {
+  opacity: 0.88;
+}
+
+
+/* =============================================
+   13. RECOMMEND LIST (section 6)
+============================================= */
+.recommend-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.recommend-list li {
+  padding: var(--space-md) var(--space-lg);
+  /* Left-border accent style */
+  border-left: 3px solid var(--colour-primary);
+  background-color: var(--colour-bg-alt);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Transition nudge shown at the bottom of the image section */
+.section__transition-cta {
+  margin-top: var(--space-2xl);
+  padding: var(--space-lg) var(--space-xl);
+  background-color: var(--colour-white);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  font-size: 1rem;
+  color: var(--colour-text-muted);
+  text-align: center;
+}
+
+.section__transition-cta a {
+  font-weight: 600;
+  color: var(--colour-primary);
+}
+
+
+/* =============================================
+   14. REFERRAL BLOCK (section 7 — dark CTA section)
+============================================= */
+.referral-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-xl);
+  padding-block: var(--space-xl);
+}
+
+.referral-block__title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  color: var(--colour-white);
+}
+
+.referral-block__intro {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 580px;
+  margin: 0;
+}
+
+/* Referral card on dark background — stays white */
+.section--cta .referral-card {
+  background-color: var(--colour-white);
+  border-color: rgba(255, 255, 255, 0.25);
+  max-width: 480px;
+  width: 100%;
+}
+
+/* Secondary button inside the dark section needs a white border */
+.section--cta .btn--secondary {
+  color: var(--colour-primary);
+  border-color: var(--colour-primary);
+  background-color: transparent;
+}
+
+.referral-block__terms {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 500px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Numbered step list shown on the dark CTA background */
+.how-it-works {
+  list-style: none;
+  counter-reset: steps;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 480px;
+  text-align: left;
+}
+
+.how-it-works li {
+  counter-increment: steps;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.how-it-works li::before {
+  content: counter(steps);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--colour-white);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* Instruction note on the dark CTA background: use button, not just the code */
+.referral-block__note {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  padding: var(--space-md) var(--space-lg);
+  max-width: 480px;
+  width: 100%;
+  line-height: 1.6;
+  text-align: left;
+}
+
+
+/* =============================================
+   15. GEAR / AFFILIATE LIST (section 8)
+============================================= */
+.gear-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-block: var(--space-xl);
+}
+
+.gear-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius);
+  background-color: var(--colour-bg-alt);
+  /* Stack on mobile, row on wider screens */
+  flex-direction: column;
+}
+
+@media (min-width: 520px) {
+  .gear-item {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.gear-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.gear-item__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.gear-item__desc {
+  font-size: 0.875rem;
+  color: var(--colour-text-muted);
+  margin: 0;
+}
+
+.affiliate-disclaimer {
+  font-size: 0.8rem;
+  color: var(--colour-text-muted);
+  border-top: 1px solid var(--colour-border);
+  padding-top: var(--space-md);
+  margin-top: var(--space-lg);
+  line-height: 1.6;
+}
+
+/* Upfront variant shown above the product list — required for ASA compliance */
+.affiliate-disclaimer--inline {
+  border: 1px solid var(--colour-border);
+  border-top: 1px solid var(--colour-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--colour-primary-light);
+  margin-top: var(--space-md);
+  margin-bottom: 0;
+}
+
+
+/* =============================================
+   16. SITE FOOTER
+============================================= */
+.site-footer {
+  background-color: var(--colour-text); /* Dark background */
+  color: rgba(255, 255, 255, 0.78);
+  padding-block: var(--space-3xl) var(--space-xl);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.site-footer__disclaimer {
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.site-footer__disclaimer a {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.site-footer__disclaimer a:hover {
+  color: var(--colour-white);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+}
+
+.site-footer__links a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+}
+
+.site-footer__links a:hover {
+  color: var(--colour-white);
+  text-decoration: underline;
+}
+
+.site-footer__affiliate {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.site-footer__copy {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+
+/* =============================================
+   17. STICKY MOBILE CTA BAR
+   Fixed to the bottom on mobile.
+   Slides in once the hero is scrolled out of view.
+   Hidden entirely on desktop (>= 768px).
+============================================= */
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background-color: var(--colour-white);
+  border-top: 1px solid var(--colour-border);
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.1);
+  /* Hidden by default — shown by JS after scrolling past the hero */
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.sticky-cta.is-visible {
+  transform: translateY(0);
+}
+
+.sticky-cta__code {
+  font-size: 0.875rem;
+  color: var(--colour-text-muted);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sticky-cta__code strong {
+  color: var(--colour-primary);
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.12em;
+}
+
+/* Desktop: hide the sticky bar — in-page CTAs are sufficient */
+@media (min-width: 768px) {
+  .sticky-cta {
+    display: none;
+  }
+}
+
+
+/* =============================================
+   18. TOAST NOTIFICATION
+   Brief confirmation shown after copying the code.
+============================================= */
+.toast {
+  position: fixed;
+  bottom: 90px; /* Sits above the sticky CTA bar on mobile */
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background-color: var(--colour-text);
+  color: var(--colour-white);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 300;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* =============================================
+   19. LIGHTBOX
+   Full-screen image overlay. Triggered by clicking
+   any .lightbox-trigger element. Controlled by
+   the .is-open class (toggled by script.js).
+============================================= */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background-color: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  /* Hidden by default — shown via .is-open */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+/* .is-open added/removed by JS */
+.lightbox-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  /* Prevent clicks on the image from triggering the backdrop-close handler */
+  pointer-events: none;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--colour-white);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family);
+  transition: background-color 0.18s ease;
+}
+
+.lightbox-close:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* =============================================
+   COOKIE CONSENT BANNER
+   Fixed bottom banner shown on first visit until the user
+   accepts or declines analytics. GA4 only loads after consent.
+   Controlled by initCookieConsent() in script.js.
+============================================= */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  background-color: var(--colour-text);
+  color: rgba(255, 255, 255, 0.9);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+  /* Hidden by default — shown by JS on first visit */
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
+}
+
+.cookie-banner.is-visible {
+  transform: translateY(0);
+}
+
+.cookie-banner__text {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Decline button on the dark banner background */
+.cookie-banner .btn--secondary {
+  color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: transparent;
+}
+
+.cookie-banner .btn--secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--colour-white);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+@media (min-width: 600px) {
+  .cookie-banner {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .cookie-banner__text {
+    flex: 1;
+  }
+}
+
+
+/* =============================================
+   20. DESKTOP ENHANCEMENTS (min-width: 768px)
+   Adjust spacing, padding, and image heights for
+   larger screens.
+============================================= */
+@media (min-width: 768px) {
+
+  .section {
+    padding-block: 5rem;
+  }
+
+  .hero {
+    padding-block: 6rem 5rem;
+  }
+
+  /* More generous card padding on wider screens */
+  .card {
+    padding: var(--space-2xl) var(--space-3xl);
+  }
+
+  /* Taller images on desktop */
+  .image-card__img {
+    height: 280px;
+  }
+
+  /* Toast sits away from any sticky bar (hidden on desktop) */
+  .toast {
+    bottom: 2rem;
+  }
+}
+
+
+/* =============================================
+   20. ACCESSIBILITY — FOCUS STYLES
+   Visible focus ring for keyboard navigation.
+   Uses the primary colour for consistency.
+============================================= */
+:focus-visible {
+  outline: 3px solid var(--colour-primary);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+
+/* =============================================
+   21. PRINT STYLES
+   Basic clean output if someone prints the page.
+============================================= */
+@media print {
+  .sticky-cta,
+  .site-header,
+  .btn {
+    display: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+    color: #000;
+    background: #fff;
+  }
+
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  /* Don't expand anchor hrefs for obvious fragment/placeholder links */
+  a[href="#"]::after,
+  a[href^="#"]::after {
+    content: '';
+  }
+}

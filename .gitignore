@@ -1,0 +1,14 @@
+# Azure Static Web Apps
+staticwebapp.config.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+
+# Local environment
+*.env
+.env.local
