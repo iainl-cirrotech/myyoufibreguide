@@ -59,11 +59,10 @@
        STICKY MOBILE CTA BAR
        Fixed to the bottom on mobile. Hidden on desktop.
        Becomes visible after user scrolls past the hero section.
-       TODO: Update the href on the anchor when your referral URL is known.
   ============================================= -->
   <div class="sticky-cta" id="stickyCta" role="complementary" aria-label="Referral code quick access">
     <span class="sticky-cta__code">Code: <strong>KCR5KH</strong></span>
-    <a href="#" class="btn btn--primary btn--sm" id="stickyReferralBtn" onclick="trackReferralClick()">
+    <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary btn--sm" id="stickyReferralBtn" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
       Check Availability
     </a>
     <button class="btn btn--secondary btn--sm" onclick="copyReferralCode()" aria-label="Copy referral code to clipboard">
@@ -164,7 +163,7 @@
           <p class="referral-card__label">My referral code</p>
           <div class="referral-card__code" aria-label="Referral code: KCR5KH">KCR5KH</div>
           <div class="referral-card__actions">
-            <a href="#" class="btn btn--primary" id="heroReferralBtn" onclick="trackReferralClick()">
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" id="heroReferralBtn" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
               Check Availability at YouFibre
             </a>
             <button class="btn btn--secondary" onclick="copyReferralCode()" aria-label="Copy referral code to clipboard">
@@ -424,8 +423,6 @@
 
     <!-- =============================================
          SECTION 7: REFERRAL SECTION (MAIN CTA)
-         TODO: Replace href="#" on referral buttons with your actual YouFibre referral URL.
-         This is managed centrally in script.js via CONFIG.referralUrl.
     ============================================= -->
     <section class="section section--cta" id="referral" aria-labelledby="referral-heading">
       <div class="container">
@@ -459,7 +456,7 @@
             <p class="referral-card__label">Referral code</p>
             <div class="referral-card__code" aria-label="Referral code: KCR5KH">KCR5KH</div>
             <div class="referral-card__actions">
-              <a href="#" class="btn btn--primary btn--lg" id="mainReferralBtn" onclick="trackReferralClick()">
+              <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary btn--lg" id="mainReferralBtn" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
                 Check Availability at YouFibre
               </a>
               <button class="btn btn--secondary btn--lg" onclick="copyReferralCode()" aria-label="Copy referral code to clipboard">
