@@ -1,6 +1,6 @@
 /* =============================================
    styles.css
-   YouFibreGuide — Mobile-first stylesheet
+   YouFibreGuide  -  Mobile-first stylesheet
    =============================================
 
    Table of contents:
@@ -23,14 +23,14 @@
    17. Sticky Mobile CTA Bar
    18. Toast Notification
    19. Desktop Enhancements (min-width: 768px)
-   20. Accessibility — Focus Styles
+   20. Accessibility  -  Focus Styles
    21. Print Styles
 ============================================= */
 
 
 /* =============================================
    1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
-   Centralised values — update colours here to
+   Centralised values  -  update colours here to
    retheme the entire site.
 ============================================= */
 :root {
@@ -152,7 +152,7 @@ h6 {
   letter-spacing: -0.02em;
 }
 
-/* Fluid heading sizes — scale smoothly with viewport */
+/* Fluid heading sizes  -  scale smoothly with viewport */
 h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); }
 h2 { font-size: clamp(1.3rem, 3.5vw, 1.875rem); }
 h3 { font-size: 1.05rem; }
@@ -238,7 +238,7 @@ h3 { font-size: 1.05rem; }
 /* =============================================
    5b. INDEPENDENCE NOTICE BAR
    Thin banner at the top of the page. Scrolls away
-   with the content — not fixed. Clearly signals this
+   with the content  -  not fixed. Clearly signals this
    is not an official YouFibre site.
 ============================================= */
 .independence-bar {
@@ -395,7 +395,7 @@ h3 { font-size: 1.05rem; }
   margin: 0;
 }
 
-/* The referral code itself — large, monospaced, easy to read */
+/* The referral code itself  -  large, monospaced, easy to read */
 .referral-card__code {
   font-size: clamp(2.25rem, 9vw, 3.25rem);
   font-weight: 800;
@@ -455,7 +455,7 @@ h3 { font-size: 1.05rem; }
   background: linear-gradient(155deg, var(--colour-primary) 0%, var(--colour-primary-dark) 100%);
 }
 
-/* Inline referral card section — sits between Why I Switched and Household Usage.
+/* Inline referral card section  -  sits between Why I Switched and Household Usage.
    Tighter vertical padding so it reads as a natural bridge, not a full section. */
 .section--referral-inline {
   padding-block: var(--space-xl);
@@ -479,7 +479,7 @@ h3 { font-size: 1.05rem; }
   margin-bottom: var(--space-2xl);
 }
 
-/* Card component — white box with subtle border and shadow */
+/* Card component  -  white box with subtle border and shadow */
 .card {
   background-color: var(--colour-white);
   border-radius: var(--radius-lg);
@@ -556,7 +556,7 @@ h3 { font-size: 1.05rem; }
 .feature-item__icon {
   font-size: 1.5rem;
   margin-bottom: var(--space-sm);
-  /* Emoji icons are decorative — hidden from screen readers via aria-hidden in HTML */
+  /* Emoji icons are decorative  -  hidden from screen readers via aria-hidden in HTML */
 }
 
 .feature-item h3 {
@@ -598,7 +598,7 @@ h3 { font-size: 1.05rem; }
   font-style: italic;
 }
 
-/* Image grid — one column on mobile, two on wider screens */
+/* Image grid  -  one column on mobile, two on wider screens */
 .image-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -643,7 +643,7 @@ h3 { font-size: 1.05rem; }
   transition: opacity 0.18s ease;
 }
 
-/* Lightbox trigger — zoom cursor hints that images are clickable */
+/* Lightbox trigger  -  zoom cursor hints that images are clickable */
 .lightbox-trigger {
   display: block;
   text-decoration: none;
@@ -695,7 +695,7 @@ h3 { font-size: 1.05rem; }
 
 
 /* =============================================
-   14. REFERRAL BLOCK (section 7 — dark CTA section)
+   14. REFERRAL BLOCK (section 7  -  dark CTA section)
 ============================================= */
 .referral-block {
   display: flex;
@@ -718,7 +718,7 @@ h3 { font-size: 1.05rem; }
   margin: 0;
 }
 
-/* Referral card on dark background — stays white */
+/* Referral card on dark background  -  stays white */
 .section--cta .referral-card {
   background-color: var(--colour-white);
   border-color: rgba(255, 255, 255, 0.25);
@@ -853,7 +853,7 @@ h3 { font-size: 1.05rem; }
   line-height: 1.6;
 }
 
-/* Upfront variant shown above the product list — required for ASA compliance */
+/* Upfront variant shown above the product list  -  required for ASA compliance */
 .affiliate-disclaimer--inline {
   border: 1px solid var(--colour-border);
   border-top: 1px solid var(--colour-border);
@@ -942,7 +942,7 @@ h3 { font-size: 1.05rem; }
   justify-content: space-between;
   gap: var(--space-sm);
   box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.1);
-  /* Hidden by default — shown by JS after scrolling past the hero */
+  /* Hidden by default  -  shown by JS after scrolling past the hero */
   transform: translateY(100%);
   transition: transform 0.3s ease;
 }
@@ -967,7 +967,7 @@ h3 { font-size: 1.05rem; }
   letter-spacing: 0.12em;
 }
 
-/* Desktop: hide the sticky bar — in-page CTAs are sufficient */
+/* Desktop: hide the sticky bar  -  in-page CTAs are sufficient */
 @media (min-width: 768px) {
   .sticky-cta {
     display: none;
@@ -1018,7 +1018,7 @@ h3 { font-size: 1.05rem; }
   align-items: center;
   justify-content: center;
   padding: var(--space-lg);
-  /* Hidden by default — shown via .is-open */
+  /* Hidden by default  -  shown via .is-open */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
@@ -1084,7 +1084,7 @@ h3 { font-size: 1.05rem; }
   flex-direction: column;
   gap: var(--space-sm);
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
-  /* Hidden by default — shown by JS on first visit */
+  /* Hidden by default  -  shown by JS on first visit */
   transform: translateY(100%);
   transition: transform 0.35s ease;
 }
@@ -1165,7 +1165,7 @@ h3 { font-size: 1.05rem; }
 
 
 /* =============================================
-   20. ACCESSIBILITY — FOCUS STYLES
+   20. ACCESSIBILITY  -  FOCUS STYLES
    Visible focus ring for keyboard navigation.
    Uses the primary colour for consistency.
 ============================================= */

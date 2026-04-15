@@ -1,6 +1,6 @@
 /* =============================================
    script.js
-   YouFibreGuide — Vanilla JavaScript
+   YouFibreGuide  -  Vanilla JavaScript
 
    Sections:
    1.  Configuration
@@ -21,7 +21,7 @@
    1. CONFIGURATION
    Update these values before going live.
    These are the only places you need to change
-   URLs and IDs — everything else reads from here.
+   URLs and IDs  -  everything else reads from here.
 ============================================= */
 const CONFIG = {
 
@@ -38,7 +38,7 @@ const CONFIG = {
   // You also need to uncomment the GA4 <script> blocks in the <head> of index.html.
   ga4MeasurementId: 'GA_MEASUREMENT_ID',
 
-  // TODO: Azure Function endpoint (for future use — e.g. form submission or lead capture).
+  // TODO: Azure Function endpoint (for future use  -  e.g. form submission or lead capture).
   // Uncomment and set when you have a function deployed.
   // azureFunctionUrl: 'https://your-function-app.azurewebsites.net/api/your-endpoint',
 
@@ -61,7 +61,7 @@ function trackEvent(eventName, params = {}) {
   if (typeof gtag === 'function') {
     gtag('event', eventName, params);
   } else {
-    // GA4 is not loaded — log to console so you can verify tracking during development.
+    // GA4 is not loaded  -  log to console so you can verify tracking during development.
     // You can remove this console.log once GA4 is configured.
     console.log('[GA4 – not configured] Event:', eventName, params);
   }
@@ -138,7 +138,7 @@ function legacyCopyToClipboard(text) {
     // execCommand is deprecated but still works in most browsers as a fallback
     success = document.execCommand('copy');
   } catch (_err) {
-    // execCommand failed — nothing we can do silently
+    // execCommand failed  -  nothing we can do silently
   } finally {
     document.body.removeChild(textarea);
   }
@@ -212,10 +212,10 @@ function initStickyCta() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Hero is visible — hide the sticky bar
+          // Hero is visible  -  hide the sticky bar
           stickyCta.classList.remove('is-visible');
         } else {
-          // Hero has scrolled out of view — show the sticky bar
+          // Hero has scrolled out of view  -  show the sticky bar
           stickyCta.classList.add('is-visible');
         }
       });
@@ -282,7 +282,7 @@ function initSmoothScrolling() {
  */
 function initReferralLinks() {
   if (!CONFIG.referralUrl || CONFIG.referralUrl === '#') {
-    // URL not yet configured — leave href="#" placeholders in place
+    // URL not yet configured  -  leave href="#" placeholders in place
     return;
   }
 
@@ -292,7 +292,7 @@ function initReferralLinks() {
 
   referralButtons.forEach((btn) => {
     btn.setAttribute('href', CONFIG.referralUrl);
-    // External link — open in a new tab with security attributes
+    // External link  -  open in a new tab with security attributes
     btn.setAttribute('target', '_blank');
     btn.setAttribute('rel', 'noopener noreferrer');
   });
@@ -392,14 +392,14 @@ function initLightbox() {
 /* =============================================
    COOKIE CONSENT
    Shows a banner on first visit asking for analytics consent.
-   GA4 is only loaded after the user accepts — never before.
+   GA4 is only loaded after the user accepts  -  never before.
    The user's choice is stored in localStorage so the banner
    does not reappear on subsequent visits.
 
    TODO: Once your GA4 Measurement ID is confirmed, update
    CONFIG.ga4MeasurementId at the top of this file.
    Remove the commented-out <script> blocks from index.html
-   (they are no longer needed — GA4 is injected dynamically here).
+   (they are no longer needed  -  GA4 is injected dynamically here).
 ============================================= */
 
 /**
@@ -417,7 +417,7 @@ function loadGA4() {
 
   // Guard: skip if the Measurement ID hasn't been set yet
   if (!measurementId || measurementId === 'GA_MEASUREMENT_ID') {
-    console.log('[GA4] Measurement ID not configured — skipping load.');
+    console.log('[GA4] Measurement ID not configured  -  skipping load.');
     return;
   }
 
@@ -457,11 +457,11 @@ function initCookieConsent() {
   }
 
   if (previousConsent === 'declined') {
-    // Respect the previous choice — don't show the banner again
+    // Respect the previous choice  -  don't show the banner again
     return;
   }
 
-  // No prior choice — show the banner after a brief delay so it
+  // No prior choice  -  show the banner after a brief delay so it
   // doesn't flash in before the page has finished rendering
   setTimeout(() => {
     banner.classList.add('is-visible');
