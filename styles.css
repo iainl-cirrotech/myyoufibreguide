@@ -1409,3 +1409,139 @@ a.site-header__logo:hover {
     flex-shrink: 0;
   }
 }
+
+
+/* =============================================
+   23. PROSE (Privacy Policy & Cookie Policy)
+   Document-style layout for long-form text pages.
+   Apply class="prose" to the article element.
+============================================= */
+.prose h1 {
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  margin-bottom: var(--space-sm);
+}
+
+.prose > p:first-of-type {
+  color: var(--colour-text-muted);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--colour-border);
+}
+
+.prose h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--colour-primary-light);
+  color: var(--colour-text);
+}
+
+.prose h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-xs);
+  color: var(--colour-text);
+}
+
+.prose p {
+  color: var(--colour-text-muted);
+  line-height: 1.75;
+}
+
+.prose p + p {
+  margin-top: var(--space-md);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--space-xl);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  font-size: 0.95rem;
+  color: var(--colour-text-muted);
+  line-height: 1.7;
+  padding-left: 0;
+}
+
+.prose ul ul {
+  list-style: circle;
+  margin-top: var(--space-xs);
+  margin-bottom: 0;
+}
+
+.prose code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85em;
+  background-color: var(--colour-bg-alt);
+  border: 1px solid var(--colour-border);
+  border-radius: 3px;
+  padding: 0.1em 0.4em;
+  color: var(--colour-text);
+}
+
+/* Cookie / data table */
+.cookie-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-size: 0.875rem;
+  overflow-x: auto;
+  display: block;
+}
+
+.cookie-table th,
+.cookie-table td {
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--colour-border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.cookie-table th {
+  background-color: var(--colour-bg-alt);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--colour-text-muted);
+  white-space: nowrap;
+}
+
+.cookie-table td code {
+  background-color: var(--colour-white);
+}
+
+.cookie-table tr:hover td {
+  background-color: var(--colour-primary-light);
+}
+
+/* Last-updated stamp */
+.prose .policy-updated {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--colour-text-muted);
+  background-color: var(--colour-bg-alt);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-md);
+  margin-bottom: var(--space-xl);
+}
