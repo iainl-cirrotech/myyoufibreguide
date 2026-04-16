@@ -388,23 +388,9 @@ const CONSENT_KEY = 'analytics_consent';
  * Called only after the user has explicitly accepted analytics.
  */
 function loadGA4() {
-  const measurementId = CONFIG.ga4MeasurementId;
-
-  if (!measurementId || measurementId === 'GA_MEASUREMENT_ID') {
-    console.log('[GA4] Measurement ID not configured. Skipping load.');
-    return;
+  if (typeof gtag === 'function') {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
   }
-
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-  document.head.appendChild(script);
-
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  window.gtag = gtag;
-  gtag('js', new Date());
-  gtag('config', measurementId);
 }
 
 /**

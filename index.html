@@ -25,11 +25,23 @@
   <!-- <meta property="og:image" content="https://youfibreguide.com/images/og-image.jpg"> -->
 
   <!-- =============================================
-       GOOGLE ANALYTICS 4
-       GA4 is loaded conditionally after cookie consent is accepted.
-       Measurement ID: G-F3RXV3BT7F
-       See CONFIG.ga4MeasurementId in script.js and initCookieConsent().
+       GOOGLE ANALYTICS 4 — CONSENT MODE V2
+       Tag loads unconditionally but with analytics_storage denied by default.
+       No data is collected until the user accepts via the cookie banner.
+       consent is updated to 'granted' in script.js after acceptance.
   ============================================= -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
 
   <link rel="stylesheet" href="styles.css">
 </head>
