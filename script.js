@@ -99,7 +99,7 @@ function copyReferralCode() {
   const code = CONFIG.referralCode;
 
   // Prefer the async Clipboard API (supported in all modern browsers)
-  if (navigator.clipboard ; typeof navigator.clipboard.writeText === 'function') {
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
     navigator.clipboard.writeText(code)
       .then(() => {
         showToast('Code copied! Enter it at checkout on the YouFibre site.');
@@ -242,7 +242,7 @@ function initSmoothScrolling() {
       const targetId = this.getAttribute('href');
 
       // Skip bare '#' links (used as button placeholders)
-      if (!targetId; targetId === '#') return;
+      if (!targetId || targetId === '#') return;
 
       const target = document.querySelector(targetId);
       if (!target) return;
@@ -351,7 +351,7 @@ function initLightbox() {
       e.preventDefault();
       const img = trigger.querySelector('img');
       if (!img) return;
-      const src = trigger.getAttribute('href') ; img.src;
+      const src = trigger.getAttribute('href') || img.src;
       openLightbox(src, img.alt);
     });
   });
@@ -363,7 +363,7 @@ function initLightbox() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' ; overlay.classList.contains('is-open')) {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
       closeLightbox();
     }
   });
