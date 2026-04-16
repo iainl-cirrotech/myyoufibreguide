@@ -890,6 +890,60 @@ h3 { font-size: 1.05rem; }
 }
 
 
+.affiliate-disclaimer--inline {
+  border: 1px solid var(--colour-border);
+  border-top: 1px solid var(--colour-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--colour-primary-light);
+  margin-top: var(--space-md);
+  margin-bottom: 0;
+}
+
+/* =============================================
+   GLOSSARY
+============================================= */
+.glossary {
+  margin-block: var(--space-xl) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.glossary__item {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: var(--space-sm) var(--space-lg);
+  padding-block: var(--space-md);
+  border-top: 1px solid var(--colour-border);
+}
+
+.glossary__item:last-child {
+  border-bottom: 1px solid var(--colour-border);
+}
+
+.glossary dt {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--colour-primary);
+  padding-top: 0.1em;
+}
+
+.glossary dd {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--colour-text);
+  line-height: 1.7;
+}
+
+@media (max-width: 540px) {
+  .glossary__item {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+}
+
+
 /* =============================================
    16. SITE FOOTER
 ============================================= */
@@ -1363,6 +1417,12 @@ a.site-header__logo:hover {
   color: var(--colour-text-muted);
 }
 
+.blog-post__body h2 {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-sm);
+  font-size: 1.25rem;
+}
+
 .blog-post__body h3 {
   margin-top: var(--space-xl);
   margin-bottom: var(--space-sm);
@@ -1370,11 +1430,25 @@ a.site-header__logo:hover {
 }
 
 .blog-post__body p {
-  color: var(--colour-text-muted);
+  color: var(--colour-text);
+  line-height: 1.75;
 }
 
 .blog-post__body p + p {
   margin-top: var(--space-md);
+}
+
+.blog-post__body ul,
+.blog-post__body ol {
+  padding-left: 1.5rem;
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.blog-post__body li {
+  color: var(--colour-text);
+  line-height: 1.75;
+  margin-bottom: var(--space-xs);
 }
 
 /* Inline referral nudge at end of each post */

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -65,6 +65,12 @@
       },
       {
         "@type": "BlogPosting",
+        "headline": "Stuck at 1 Gbps after upgrading to You2000? Here's why",
+        "url": "https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html",
+        "datePublished": "2026-01-20"
+      },
+      {
+        "@type": "BlogPosting",
         "headline": "Adding a static IP to your YouFibre connection",
         "url": "https://www.myyoufibreguide.com/blog/youfibre-static-ip.html",
         "datePublished": "2025-11-10"
@@ -111,9 +117,6 @@
 
         <ul class="blog-list" aria-label="Blog posts">
 
-          <!-- =============================================
-               POST: Setting up OPNsense with YouFibre
-          ============================================= -->
           <li class="blog-card">
             <div class="blog-card__meta">
               <time class="blog-card__date" datetime="2026-04-16">16 April 2026</time>
@@ -131,9 +134,6 @@
             <a href="blog/opnsense-youfibre-setup.html" class="blog-card__read-more">Read post &rarr;</a>
           </li>
 
-          <!-- =============================================
-               POST: Two years on
-          ============================================= -->
           <li class="blog-card">
             <div class="blog-card__meta">
               <time class="blog-card__date" datetime="2026-03-01">1 March 2026</time>
@@ -150,9 +150,22 @@
             <a href="blog/two-years-with-youfibre.html" class="blog-card__read-more">Read post &rarr;</a>
           </li>
 
-          <!-- =============================================
-               POST: Static IP
-          ============================================= -->
+          <li class="blog-card">
+            <div class="blog-card__meta">
+              <time class="blog-card__date" datetime="2026-01-20">20 January 2026</time>
+              <span class="blog-card__tag">Troubleshooting</span>
+            </div>
+            <h2 class="blog-card__title">
+              <a href="blog/youfibre-2gbps-upgrade-speed-fix.html">Stuck at 1 Gbps after upgrading to You2000? Here&#x2019;s why</a>
+            </h2>
+            <p class="blog-card__excerpt">
+              Upgraded from You1000 to You2000 but speed tests are capping at around
+              940 Mbps? In the vast majority of cases the bottleneck is on the user side.
+              Here&#x2019;s a checklist covering the most common causes.
+            </p>
+            <a href="blog/youfibre-2gbps-upgrade-speed-fix.html" class="blog-card__read-more">Read post &rarr;</a>
+          </li>
+
           <li class="blog-card">
             <div class="blog-card__meta">
               <time class="blog-card__date" datetime="2025-11-10">10 November 2025</time>
@@ -173,201 +186,6 @@
 
       </div>
     </section>
-
-    <!-- =============================================
-         FULL POST: OPNsense with YouFibre
-    ============================================= -->
-    <article class="section section--alt blog-post" id="post-opnsense-youfibre" aria-labelledby="post-opnsense-heading">
-      <div class="container">
-        <div class="blog-post__header">
-          <div class="blog-post__meta">
-            <time datetime="2026-04-16">16 April 2026</time>
-            <span class="blog-card__tag">Setup &amp; Config</span>
-          </div>
-          <h2 id="post-opnsense-heading">Setting up OPNsense with YouFibre FTTP</h2>
-        </div>
-
-        <div class="blog-post__body">
-          <p>
-            YouFibre uses a standard DHCP handoff from the ONT (optical network terminal),
-            so there is no PPPoE, no VLAN tagging required on the WAN, and no username or
-            password to enter. You plug an Ethernet cable from the ONT into your router's
-            WAN interface and configure that interface for DHCP. That's it for the basic
-            connection.
-          </p>
-          <p>
-            On my setup — an HP ProDesk 400 G5 SFF running OPNsense with an Intel X550-T2
-            dual-port 10GbE NIC — the WAN interface came up immediately on first boot.
-            No special configuration was needed to authenticate or negotiate the connection.
-          </p>
-
-          <h3>MTU</h3>
-          <p>
-            Leave MTU at the default (1500) unless you have a specific reason to change it.
-            I initially tried 9000 (jumbo frames) on the LAN side but the YouFibre ONT side
-            doesn't support jumbo frames, so the WAN stays at 1500. Jumbo frames on the
-            internal LAN are fine if your switch supports them, but keep the WAN interface
-            at 1500 to avoid fragmentation issues.
-          </p>
-
-          <h3>Dual-WAN failover</h3>
-          <p>
-            I run YouFibre as WAN1 (primary) and a second ISP on WAN2 (standby). In
-            OPNsense, this is configured under <strong>System &rarr; Gateways</strong>.
-            Set a gateway monitor IP for each WAN (I use the ISP's own DNS server address
-            as the monitor target), then create a gateway group with WAN1 at Tier 1 and
-            WAN2 at Tier 2. Apply that gateway group to your LAN firewall rules and
-            OPNsense will automatically fail over if the primary drops.
-          </p>
-          <p>
-            In over two years, the failover has never been triggered. Which is exactly the
-            outcome you want.
-          </p>
-
-          <h3>DNS</h3>
-          <p>
-            I run Unbound as the local DNS resolver rather than forwarding to YouFibre's
-            DNS servers. Latency is marginally better and it gives me local split-DNS for
-            internal services. No issues with YouFibre blocking or interfering with
-            third-party DNS.
-          </p>
-
-          <div class="blog-post__referral">
-            <p>
-              If you're not yet on YouFibre and this has been useful, you can use my referral
-              code <strong>KCR5KH</strong> when you sign up. Both of us may receive a reward
-              once your installation is complete.
-            </p>
-            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
-              Check Availability at YouFibre
-            </a>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- =============================================
-         FULL POST: Two years on
-    ============================================= -->
-    <article class="section blog-post" id="post-two-years" aria-labelledby="post-two-years-heading">
-      <div class="container">
-        <div class="blog-post__header">
-          <div class="blog-post__meta">
-            <time datetime="2026-03-01">1 March 2026</time>
-            <span class="blog-card__tag">Experience</span>
-          </div>
-          <h2 id="post-two-years-heading">Two years with YouFibre: what's changed, what hasn't</h2>
-        </div>
-
-        <div class="blog-post__body">
-          <p>
-            I switched to YouFibre in early 2024. As of March 2026, I've been on the
-            service for just over two years. This is a quick update on how things stand.
-          </p>
-
-          <h3>Reliability</h3>
-          <p>
-            There have been two notable outages in two years. One lasted around 90 minutes,
-            one was closer to 20 minutes. Both were communicated via YouFibre's status
-            page and resolved without me needing to contact support. That's a significantly
-            better record than any of my previous ISPs over a comparable period.
-          </p>
-
-          <h3>Speeds</h3>
-          <p>
-            Still consistently at or above the advertised 2 Gbps on download, and 1.8+ Gbps
-            on upload. Nothing has changed there. Peak-hour degradation remains undetectable
-            in normal use.
-          </p>
-
-          <h3>Pricing</h3>
-          <p>
-            There was a small price increase at renewal. Worth checking the current
-            package pricing on YouFibre's website rather than relying on what you paid
-            when you first signed up. Still competitive compared to the alternatives at
-            this speed tier.
-          </p>
-
-          <h3>Would I switch again?</h3>
-          <p>
-            Yes, without hesitation. The connection has become the one part of my
-            home office setup I don't have to think about. For someone working from home
-            full-time in a technically demanding role, that's exactly what I need.
-          </p>
-
-          <div class="blog-post__referral">
-            <p>
-              Use referral code <strong>KCR5KH</strong> when signing up. Both parties may
-              receive a reward after a successful installation and first bill payment.
-            </p>
-            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
-              Check Availability at YouFibre
-            </a>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- =============================================
-         FULL POST: Static IP
-    ============================================= -->
-    <article class="section section--alt blog-post" id="post-static-ip" aria-labelledby="post-static-ip-heading">
-      <div class="container">
-        <div class="blog-post__header">
-          <div class="blog-post__meta">
-            <time datetime="2025-11-10">10 November 2025</time>
-            <span class="blog-card__tag">Setup &amp; Config</span>
-          </div>
-          <h2 id="post-static-ip-heading">Adding a static IP to your YouFibre connection</h2>
-        </div>
-
-        <div class="blog-post__body">
-          <p>
-            YouFibre offer a static IP as a paid add-on. If you're self-hosting websites,
-            running a mail server, or need a reliable endpoint for a VPN or remote access,
-            it's worth it. Dynamic IP addresses from residential ISPs can change, which
-            breaks DNS records and remote access configurations.
-          </p>
-
-          <h3>How to get one</h3>
-          <p>
-            Contact YouFibre support and request a static IP. At the time of writing it's
-            available as a monthly add-on. Check their current pricing, as it may have
-            changed. The process is straightforward: they provision it on their end and
-            provide you with the IP address and subnet details.
-          </p>
-
-          <h3>Configuring it in OPNsense</h3>
-          <p>
-            Switch the WAN interface from DHCP to static. Enter the IP address, subnet
-            mask, and gateway provided by YouFibre. For DNS, I use Unbound locally rather
-            than YouFibre's resolvers, so there's nothing to change there.
-          </p>
-          <p>
-            Everything came up cleanly. No additional configuration was needed on the
-            YouFibre side beyond the provisioning request.
-          </p>
-
-          <h3>What I use it for</h3>
-          <p>
-            Hosting a few personal projects and websites directly from the network,
-            running my own mail server with correct reverse DNS, and as a stable endpoint
-            for remote access into the home office. The static IP has been solid — no
-            surprise IP changes since the switch.
-          </p>
-
-          <div class="blog-post__referral">
-            <p>
-              If you're not yet a YouFibre customer, use referral code <strong>KCR5KH</strong>
-              when signing up. Both parties may receive a reward.
-            </p>
-            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
-              Check Availability at YouFibre
-            </a>
-          </div>
-        </div>
-      </div>
-    </article>
 
   </main>
 

@@ -9,6 +9,14 @@
     <atom:link href="https://www.myyoufibreguide.com/feed.xml" rel="self" type="application/rss+xml"/>
 
     <item>
+      <title>Stuck at 1 Gbps after upgrading to You2000? Here's why</title>
+      <link>https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html</guid>
+      <pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate>
+      <description>Upgraded from You1000 to You2000 but speed tests are capping at around 940 Mbps? In the vast majority of cases the bottleneck is on the user side. A checklist covering the most common causes: PC NIC capability, cables, router hardware, QoS settings, and the ONT.</description>
+    </item>
+
+    <item>
       <title>Setting up OPNsense with YouFibre FTTP</title>
       <link>https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html</link>
       <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html</guid>

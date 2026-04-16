@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Stuck at 1 Gbps After Upgrading to You2000? Here's Why | YouFibreGuide</title>
+  <meta name="description" content="Upgraded from YouFibre You1000 to You2000 but still seeing speeds capped at around 940 Mbps? Here are the most common causes and how to fix them.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Stuck at 1 Gbps After Upgrading to You2000? Here's Why | YouFibreGuide">
+  <meta property="og:description" content="Upgraded to YouFibre's 2 Gbps package but speed tests are capping at 940 Mbps? The issue is almost always on the user side. Here's a checklist to work through.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html">
+  <meta property="article:published_time" content="2026-01-20">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Stuck at 1 Gbps After Upgrading to You2000? Here's Why">
+  <meta name="twitter:description" content="Upgraded to YouFibre's 2 Gbps package but speed tests are capping at 940 Mbps? The issue is almost always on the user side. Here's a checklist.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Stuck at 1 Gbps after upgrading to You2000? Here's why",
+    "description": "Upgraded from YouFibre You1000 to You2000 but still seeing speeds capped at around 940 Mbps? Here are the most common causes and how to fix them.",
+    "datePublished": "2026-01-20",
+    "dateModified": "2026-01-20",
+    "url": "https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/youfibre-2gbps-upgrade-speed-fix.html"
+    },
+    "keywords": ["YouFibre You2000", "YouFibre 2Gbps upgrade", "YouFibre speed cap 1Gbps", "YouFibre upgrade stuck", "full fibre broadband speed fix", "2.5GbE network card"]
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2026-01-20">20 January 2026</time>
+            <span class="blog-card__tag">Troubleshooting</span>
+          </div>
+          <h1 id="post-heading">Stuck at 1 Gbps after upgrading to You2000? Here's why</h1>
+        </div>
+
+        <div class="blog-post__body">
+          <p>
+            A pattern I've seen repeatedly: someone upgrades from You1000 to You2000, runs a
+            speed test, and gets approximately 940 Mbps. They assume YouFibre haven't applied
+            the upgrade correctly and raise a support ticket. In the vast majority of cases, the
+            line is delivering 2 Gbps just fine — the bottleneck is somewhere in the user's own
+            hardware or configuration.
+          </p>
+          <p>
+            This is a checklist of the most common causes, in roughly the order I'd work through
+            them.
+          </p>
+
+          <h2>1. Don't test via Wi-Fi</h2>
+          <p>
+            Before anything else: ignore Wi-Fi speed tests entirely until you've confirmed the
+            line speed over Ethernet. Even Wi-Fi 6E or Wi-Fi 7 devices will struggle to hit a
+            consistent 2 Gbps — there are too many variables involved (channel congestion,
+            client capability, distance, interference). If you can't see 2 Gbps via a wired
+            connection, you won't see it over Wi-Fi either. Confirm the wired result first, then
+            investigate wireless separately if needed.
+          </p>
+
+          <h2>2. Check whether your PC has a 2.5 GbE port</h2>
+          <p>
+            This is the most common cause by far. The majority of consumer PCs and laptops ship
+            with a standard Gigabit Ethernet port (1 GbE), which is physically incapable of
+            sustaining more than around 940 Mbps. If your machine only has a 1 GbE port, that's
+            your ceiling regardless of what the line can deliver.
+          </p>
+          <p>
+            On Windows, you can check this without opening the case. Go to
+            <strong>Settings &rarr; Network &amp; Internet</strong>, click the
+            <strong>Properties</strong> button for your active connection, and look for
+            <strong>Link speed (Receive/Transmit)</strong>. If it reads <em>1000/1000 Mbps</em>,
+            you have a Gigabit port. You need at least <em>2500/2500 Mbps</em> (2.5 GbE) to
+            exceed that limit.
+          </p>
+          <p>
+            The fix is either a USB-to-2.5GbE adapter or a PCIe 2.5 GbE NIC. If you go the
+            USB route, make sure you're plugging into a USB 3 port — they're typically coloured
+            blue and labelled SS (SuperSpeed). USB 2 doesn't have enough bandwidth.
+          </p>
+
+          <h2>3. Check your cables</h2>
+          <p>
+            For 2.5 Gbps, you need at least a Cat5e cable — and that covers most cable runs
+            made in the last 20 years. However, not all cables are labelled, and even in 2026
+            some manufacturers include Cat5 cables in the box with new hardware. I recently
+            received a Cat5 cable bundled with a new device released just a month prior.
+          </p>
+          <p>
+            If you're unsure, swap both the cable between your router and the ONT, and the
+            cable between your PC and your router, for a known-good Cat5e or Cat6 cable.
+            Shorter cables are better, and cheap Cat5e cables can fail at higher speeds even
+            if they work fine at Gigabit. Cat6 is the safer choice for any new purchase and
+            is inexpensive.
+          </p>
+
+          <h2>4. Check your router hardware</h2>
+          <p>
+            YouFibre provides different hardware for different speed tiers. If you kept your
+            old router after upgrading, or purchased your own, it may be the bottleneck.
+          </p>
+          <p>
+            There's a specific trap here: many routers marketed as "2.5 Gbps capable" have a
+            single 2.5 GbE WAN port but only Gigabit LAN ports. The router can receive the
+            full 2 Gbps from the ONT, but it can only forward a maximum of 1 Gbps to any
+            device on the local network. You need both a 2.5 GbE (or 10 GbE) WAN port
+            <em>and</em> a 2.5 GbE LAN port to deliver 2 Gbps end-to-end.
+          </p>
+          <p>
+            Check the spec sheet for your router carefully, not just the headline marketing
+            figure. If the LAN ports are listed as 1 GbE, that router will never deliver more
+            than ~940 Mbps to a connected device, regardless of what arrives at the WAN.
+          </p>
+
+          <h2>5. Check QoS settings</h2>
+          <p>
+            Many routers include a Quality of Service (QoS) or traffic management feature
+            that prioritises latency-sensitive traffic (video calls, gaming) over bulk
+            transfers. To work correctly, QoS needs to know your connection's maximum speed —
+            and that figure is often set automatically during initial setup by running a speed
+            test at the time.
+          </p>
+          <p>
+            If you were on You1000 when you first configured QoS, the router may have recorded
+            your maximum speed as ~940 Mbps and is now artificially capping throughput to that
+            figure to leave headroom for high-priority traffic. Log into your router admin
+            interface, find the QoS or traffic management settings, and either update the
+            maximum speed to 2000 Mbps or disable QoS entirely to test.
+          </p>
+
+          <h2>6. Use the right speed testing tools</h2>
+          <p>
+            Browser-based speed tests can underperform at very high speeds due to limitations
+            in how browsers handle multiple TCP connections. If you're getting disappointing
+            results in the browser, it's worth trying a native application instead.
+          </p>
+          <p>
+            Speedtest.net has a native Windows app that tends to produce more consistent
+            results at these speeds. For a more technical test, public iperf3 servers are a
+            useful option — they test raw TCP throughput without the overhead of a web
+            interface.
+          </p>
+
+          <h2>7. If none of the above applies, contact YouFibre about the ONT</h2>
+          <p>
+            If your PC has a 2.5 GbE or 10 GbE port, your cables are good, your router has
+            2.5 GbE on both WAN and LAN, QoS is disabled, and you're still seeing exactly
+            ~940 Mbps — the issue may be the ONT (the small fibre termination box on the
+            wall, often an Adtran unit). The ONT doesn't always automatically apply a new
+            speed profile after a package upgrade.
+          </p>
+          <p>
+            At this point, contact YouFibre support and ask them to reset the ONT and push
+            the correct configuration for your new package. This is a quick fix on their
+            end once everything else has been ruled out.
+          </p>
+
+          <div class="blog-post__referral">
+            <p>
+              If you're not yet on YouFibre and are considering making the switch, you can
+              use referral code <strong>KCR5KH</strong> when signing up. Both parties may
+              receive a reward after a successful installation and first bill payment.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
