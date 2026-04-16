@@ -145,9 +145,11 @@
           </p>
           <p>
             My setup uses a custom <strong>OPNsense router</strong> with a
-            <strong>10Gb Ethernet</strong> network throughout the house. Most ISPs have been
-            awkward about non-standard router setups. YouFibre has been perfectly
-            straightforward. I plugged in my own equipment and got on with it.
+            <strong>10Gb Ethernet</strong> network throughout the house, configured with
+            YouFibre as the primary WAN and a second ISP as an automatic failover.
+            The failover has never actually been triggered — which is the whole point.
+            Most ISPs are awkward about non-standard router setups. YouFibre has been
+            perfectly straightforward. I plugged in my own equipment and got on with it.
           </p>
         </article>
       </div>
@@ -265,9 +267,10 @@
               <div class="feature-item__icon" aria-hidden="true">🔧</div>
               <h3>Custom Router (OPNsense)</h3>
               <p>
-                My router is an HP ProDesk 400 G5 SFF picked up on eBay, upgraded with
-                an Intel X550-T2 dual-port 10GbE NIC and running OPNsense. YouFibre
-                worked with it straight away; no ISP restrictions on custom hardware.
+                My router is an HP ProDesk 400 G5 SFF running OPNsense with a dual-WAN
+                configuration: YouFibre as the primary WAN and a second ISP on standby
+                as an automatic failover. The failover has never been needed, but it's
+                there. YouFibre worked with the custom setup straight away.
               </p>
             </div>
 
@@ -413,7 +416,7 @@
             </figure>
           </div>
           <p class="image-section__caption">
-            OPNsense running on the HP ProDesk. 59 days uptime at time of screenshot. Four interfaces: WAN1, WAN2, LAN, and a VLAN trunk.
+            OPNsense running on the HP ProDesk. 59 days uptime at time of screenshot. Four interfaces: WAN1 (YouFibre — primary), WAN2 (failover ISP — standby), LAN, and a VLAN trunk.
           </p>
         </div>
 
