@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>YouFibreGuide Blog</title>
+    <link>https://www.myyoufibreguide.com/blog.html</link>
+    <description>Notes, updates, and tips from two-plus years of running YouFibre as the backbone of a home office and busy household.</description>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 16 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.myyoufibreguide.com/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>Setting up OPNsense with YouFibre FTTP</title>
+      <link>https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html</guid>
+      <pubDate>Wed, 16 Apr 2026 00:00:00 +0000</pubDate>
+      <description>YouFibre delivers on standard DHCP, so plugging in a custom router is straightforward — but there are a few things worth knowing about MTU, the ONT handoff, and getting your WAN interface configured cleanly.</description>
+    </item>
+
+    <item>
+      <title>Two years with YouFibre: what's changed, what hasn't</title>
+      <link>https://www.myyoufibreguide.com/blog/two-years-with-youfibre.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/two-years-with-youfibre.html</guid>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 +0000</pubDate>
+      <description>A quick update after hitting the two-year mark. Pricing has moved slightly, a couple of short outages, and a new package tier. Here's whether I'd still make the same choice today.</description>
+    </item>
+
+    <item>
+      <title>Adding a static IP to your YouFibre connection</title>
+      <link>https://www.myyoufibreguide.com/blog/youfibre-static-ip.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/youfibre-static-ip.html</guid>
+      <pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate>
+      <description>If you're self-hosting services or running a VPN endpoint from home, a static IP makes life much simpler. YouFibre offer it as an add-on. Here's what it costs, how to request it, and how to configure it on OPNsense.</description>
+    </item>
+
+  </channel>
+</rss>

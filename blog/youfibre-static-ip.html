@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Adding a Static IP to Your YouFibre Connection | YouFibreGuide</title>
+  <meta name="description" content="How to add a static IP address to a YouFibre FTTP connection. What it costs, how to request it, and how to configure it in OPNsense.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/youfibre-static-ip.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Adding a Static IP to Your YouFibre Connection | YouFibreGuide">
+  <meta property="og:description" content="How to add a static IP address to a YouFibre FTTP connection. What it costs, how to request it, and how to configure it in OPNsense.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/youfibre-static-ip.html">
+  <meta property="article:published_time" content="2025-11-10">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Adding a Static IP to Your YouFibre Connection">
+  <meta name="twitter:description" content="How to add a static IP to YouFibre. What it costs, how to request it, and how to configure it in OPNsense.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Adding a static IP to your YouFibre connection",
+    "description": "How to add a static IP address to a YouFibre FTTP connection. What it costs, how to request it, and how to configure it in OPNsense.",
+    "datePublished": "2025-11-10",
+    "dateModified": "2025-11-10",
+    "url": "https://www.myyoufibreguide.com/blog/youfibre-static-ip.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/youfibre-static-ip.html"
+    },
+    "keywords": ["YouFibre static IP", "YouFibre static IP address", "OPNsense static IP", "YouFibre add-on", "self hosting broadband"]
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section section--alt blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2025-11-10">10 November 2025</time>
+            <span class="blog-card__tag">Setup &amp; Config</span>
+          </div>
+          <h1 id="post-heading">Adding a static IP to your YouFibre connection</h1>
+        </div>
+
+        <div class="blog-post__body">
+          <p>
+            YouFibre offer a static IP as a paid add-on. If you're self-hosting websites,
+            running a mail server, or need a reliable endpoint for a VPN or remote access,
+            it's worth it. Dynamic IP addresses from residential ISPs can change, which
+            breaks DNS records and remote access configurations.
+          </p>
+
+          <h2>How to get one</h2>
+          <p>
+            Contact YouFibre support and request a static IP. At the time of writing it's
+            available as a monthly add-on. Check their current pricing, as it may have
+            changed. The process is straightforward: they provision it on their end and
+            provide you with the IP address and subnet details.
+          </p>
+
+          <h2>Configuring it in OPNsense</h2>
+          <p>
+            Switch the WAN interface from DHCP to static. Enter the IP address, subnet
+            mask, and gateway provided by YouFibre. For DNS, I use Unbound locally rather
+            than YouFibre's resolvers, so there's nothing to change there.
+          </p>
+          <p>
+            Everything came up cleanly. No additional configuration was needed on the
+            YouFibre side beyond the provisioning request.
+          </p>
+
+          <h2>What I use it for</h2>
+          <p>
+            Hosting a few personal projects and websites directly from the network,
+            running my own mail server with correct reverse DNS, and as a stable endpoint
+            for remote access into the home office. The static IP has been solid — no
+            surprise IP changes since the switch.
+          </p>
+
+          <div class="blog-post__referral">
+            <p>
+              If you're not yet a YouFibre customer, use referral code <strong>KCR5KH</strong>
+              when signing up. Both parties may receive a reward.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>

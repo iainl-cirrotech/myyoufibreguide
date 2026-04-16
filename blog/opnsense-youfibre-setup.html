@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Setting up OPNsense with YouFibre FTTP | YouFibreGuide</title>
+  <meta name="description" content="How to configure OPNsense with a YouFibre FTTP connection. Covers DHCP handoff from the ONT, MTU settings, dual-WAN failover, and DNS with Unbound.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Setting up OPNsense with YouFibre FTTP | YouFibreGuide">
+  <meta property="og:description" content="How to configure OPNsense with a YouFibre FTTP connection. Covers DHCP handoff from the ONT, MTU settings, dual-WAN failover, and DNS with Unbound.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html">
+  <meta property="article:published_time" content="2026-04-16">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Setting up OPNsense with YouFibre FTTP">
+  <meta name="twitter:description" content="How to configure OPNsense with a YouFibre FTTP connection. DHCP handoff, MTU, dual-WAN failover, and DNS configuration.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Setting up OPNsense with YouFibre FTTP",
+    "description": "How to configure OPNsense with a YouFibre FTTP connection. Covers DHCP handoff from the ONT, MTU settings, dual-WAN failover, and DNS configuration.",
+    "datePublished": "2026-04-16",
+    "dateModified": "2026-04-16",
+    "url": "https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/opnsense-youfibre-setup.html"
+    },
+    "keywords": ["OPNsense", "YouFibre", "FTTP", "custom router", "dual WAN", "MTU", "Unbound", "DNS", "HP ProDesk"]
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section section--alt blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2026-04-16">16 April 2026</time>
+            <span class="blog-card__tag">Setup &amp; Config</span>
+          </div>
+          <h1 id="post-heading">Setting up OPNsense with YouFibre FTTP</h1>
+        </div>
+
+        <div class="blog-post__body">
+          <p>
+            YouFibre uses a standard DHCP handoff from the ONT (optical network terminal),
+            so there is no PPPoE, no VLAN tagging required on the WAN, and no username or
+            password to enter. You plug an Ethernet cable from the ONT into your router's
+            WAN interface and configure that interface for DHCP. That's it for the basic
+            connection.
+          </p>
+          <p>
+            On my setup — an HP ProDesk 400 G5 SFF running OPNsense with an Intel X550-T2
+            dual-port 10GbE NIC — the WAN interface came up immediately on first boot.
+            No special configuration was needed to authenticate or negotiate the connection.
+          </p>
+
+          <h2>MTU</h2>
+          <p>
+            Leave MTU at the default (1500) unless you have a specific reason to change it.
+            I initially tried 9000 (jumbo frames) on the LAN side but the YouFibre ONT side
+            doesn't support jumbo frames, so the WAN stays at 1500. Jumbo frames on the
+            internal LAN are fine if your switch supports them, but keep the WAN interface
+            at 1500 to avoid fragmentation issues.
+          </p>
+
+          <h2>Dual-WAN failover</h2>
+          <p>
+            I run YouFibre as WAN1 (primary) and a second ISP on WAN2 (standby). In
+            OPNsense, this is configured under <strong>System &rarr; Gateways</strong>.
+            Set a gateway monitor IP for each WAN (I use the ISP's own DNS server address
+            as the monitor target), then create a gateway group with WAN1 at Tier 1 and
+            WAN2 at Tier 2. Apply that gateway group to your LAN firewall rules and
+            OPNsense will automatically fail over if the primary drops.
+          </p>
+          <p>
+            In over two years, the failover has never been triggered. Which is exactly the
+            outcome you want.
+          </p>
+
+          <h2>DNS</h2>
+          <p>
+            I run Unbound as the local DNS resolver rather than forwarding to YouFibre's
+            DNS servers. Latency is marginally better and it gives me local split-DNS for
+            internal services. No issues with YouFibre blocking or interfering with
+            third-party DNS.
+          </p>
+
+          <div class="blog-post__referral">
+            <p>
+              If you're not yet on YouFibre and this has been useful, you can use my referral
+              code <strong>KCR5KH</strong> when you sign up. Both of us may receive a reward
+              once your installation is complete.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
