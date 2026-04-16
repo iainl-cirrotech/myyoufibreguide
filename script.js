@@ -400,7 +400,7 @@ function loadGA4() {
   script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
   document.head.appendChild(script);
 
-  window.dataLayer = window.dataLayer ; [];
+  window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   window.gtag = gtag;
   gtag('js', new Date());
@@ -417,7 +417,12 @@ function initCookieConsent() {
 
   if (!banner || !acceptBtn || !declineBtn) return;
 
-  const previousConsent = localStorage.getItem(CONSENT_KEY);
+  let previousConsent = null;
+  try {
+    previousConsent = localStorage.getItem(CONSENT_KEY);
+  } catch (e) {
+    // localStorage unavailable (e.g. Safari private mode) — show banner
+  }
 
   if (previousConsent === 'accepted') {
     loadGA4();
@@ -434,14 +439,14 @@ function initCookieConsent() {
   }, 1500);
 
   acceptBtn.addEventListener('click', () => {
-    localStorage.setItem(CONSENT_KEY, 'accepted');
+    try { localStorage.setItem(CONSENT_KEY, 'accepted'); } catch (e) { /* private mode */ }
     banner.classList.remove('is-visible');
     banner.setAttribute('aria-hidden', 'true');
     loadGA4();
   });
 
   declineBtn.addEventListener('click', () => {
-    localStorage.setItem(CONSENT_KEY, 'declined');
+    try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch (e) { /* private mode */ }
     banner.classList.remove('is-visible');
     banner.setAttribute('aria-hidden', 'true');
   });
