@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Building an OPNsense Router on an HP ProDesk 400 G5 SFF for YouFibre | YouFibreGuide</title>
+  <meta name="description" content="Step-by-step guide: fitting an Intel X550-T2 10GbE NIC into an HP ProDesk 400 G5 SFF, creating a bootable OPNsense USB, installing OPNsense, and configuring it for YouFibre FTTP.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/hp-prodesk-nic-opnsense-youfibre-setup.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Building an OPNsense Router on an HP ProDesk 400 G5 SFF for YouFibre | YouFibreGuide">
+  <meta property="og:description" content="Step-by-step guide: fitting an Intel X550-T2 10GbE NIC into an HP ProDesk 400 G5 SFF, creating a bootable OPNsense USB, installing OPNsense, and configuring it for YouFibre FTTP.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/hp-prodesk-nic-opnsense-youfibre-setup.html">
+  <meta property="article:published_time" content="2026-04-17">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Building an OPNsense Router on an HP ProDesk 400 G5 SFF for YouFibre">
+  <meta name="twitter:description" content="Fitting a 10GbE NIC, creating a bootable OPNsense USB, and doing a basic YouFibre FTTP configuration from scratch.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Building an OPNsense Router on an HP ProDesk 400 G5 SFF for YouFibre",
+    "description": "Step-by-step guide to fitting an Intel X550-T2 10GbE NIC into an HP ProDesk 400 G5 SFF, creating a bootable OPNsense USB, and configuring it for a YouFibre FTTP connection.",
+    "datePublished": "2026-04-17",
+    "dateModified": "2026-04-17",
+    "url": "https://www.myyoufibreguide.com/blog/hp-prodesk-nic-opnsense-youfibre-setup.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/hp-prodesk-nic-opnsense-youfibre-setup.html"
+    },
+    "keywords": ["OPNsense", "YouFibre", "HP ProDesk 400 G5 SFF", "Intel X550-T2", "10GbE NIC", "PCIe NIC install", "bootable USB OPNsense", "FTTP router", "custom router YouFibre"]
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section section--alt blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2026-04-17">17 April 2026</time>
+            <span class="blog-card__tag">Hardware &amp; Setup</span>
+          </div>
+          <h1 id="post-heading">Building an OPNsense router on an HP ProDesk 400&nbsp;G5&nbsp;SFF for YouFibre</h1>
+        </div>
+
+        <div class="blog-post__body">
+
+          <p>
+            This is the hardware I use as my main router. The HP ProDesk 400 G5 SFF is a small,
+            quiet, low-power desktop that you can pick up second-hand for very little. With a
+            10GbE PCIe NIC fitted, it handles the full YouFibre 2&nbsp;Gbps connection without
+            breaking a sweat. This guide covers the full process: fitting the NIC, creating an
+            OPNsense USB installer, installing OPNsense, and getting it talking to YouFibre.
+          </p>
+
+          <h2>What you need</h2>
+          <ul class="feature-list">
+            <li><strong>HP ProDesk 400 G5 SFF</strong> &mdash; sourceable from eBay for around &pound;50&ndash;80. Make sure it has the i3-8100 or better and at least 8&nbsp;GB RAM. 16&nbsp;GB is preferable.</li>
+            <li><strong>Intel X550-T2 dual-port 10GbE PCIe NIC</strong> &mdash; or any OEM equivalent (Dell, HP OEM versions of the same chip are identical). Look for the <em>low-profile bracket</em> variant, or a card that ships with both brackets. The SFF chassis requires a half-height card.</li>
+            <li><strong>A USB drive</strong> &mdash; 8&nbsp;GB or larger. It will be wiped.</li>
+            <li><strong>A monitor and keyboard</strong> &mdash; needed for the initial install only.</li>
+            <li><strong>A Torx T15 screwdriver</strong> &mdash; the ProDesk uses a T15 for the chassis thumb screw and some internal mounts.</li>
+            <li><strong>An anti-static wrist strap</strong> &mdash; optional but good practice.</li>
+          </ul>
+
+          <h2>Part 1: Fitting the PCIe NIC</h2>
+
+          <h3>Open the chassis</h3>
+          <p>
+            Power the machine off completely and unplug the power cable. The SFF chassis
+            opens via a single thumb screw (or T15 fastener depending on the variant) at the
+            rear. Slide the left side panel rearward and lift it off. The interior is compact
+            but accessible.
+          </p>
+
+          <h3>Check the bracket</h3>
+          <p>
+            The SFF chassis only accepts half-height (low-profile) PCIe cards. A full-height
+            card will physically not fit &mdash; the bracket will foul the chassis. The
+            Intel X550-T2 OEM cards typically ship with a full-height bracket fitted and a
+            low-profile bracket included separately. If yours only has a full-height bracket,
+            they are available to buy separately for a few pounds. Swap the bracket before
+            fitting: remove the two screws holding the existing bracket to the card's
+            faceplate, swap to the low-profile bracket, and refit the screws.
+          </p>
+
+          <h3>Locate the PCIe x16 slot</h3>
+          <p>
+            The ProDesk 400 G5 SFF has one PCIe&nbsp;3.0 x16 slot and one PCIe&nbsp;3.0 x1 slot.
+            Use the x16 slot for the X550-T2. Remove the slot cover by unscrewing the single
+            retaining screw at the top of the bracket opening, then sliding the cover out.
+            Keep the screw &mdash; you'll reuse it.
+          </p>
+
+          <h3>Seat the card</h3>
+          <p>
+            Align the X550-T2's edge connector with the x16 slot and press down firmly until
+            the slot's retention clip clicks into place. The card should sit flush with no
+            visible gap between the connector and slot. Fasten the bracket to the chassis
+            with the screw you removed from the slot cover. Give the card a gentle tug to
+            confirm it is properly seated.
+          </p>
+          <p>
+            The X550-T2 is bus-powered; no additional power connectors are required.
+          </p>
+
+          <h3>Close up</h3>
+          <p>
+            Replace the side panel and reattach the power cable. The machine is ready for
+            the next step.
+          </p>
+
+          <h2>Part 2: Creating a bootable OPNsense USB</h2>
+
+          <h3>Download OPNsense</h3>
+          <p>
+            Go to <a href="https://opnsense.org/download/" target="_blank" rel="noopener noreferrer">opnsense.org/download</a>.
+            Select the following options:
+          </p>
+          <ul class="feature-list">
+            <li><strong>Architecture:</strong> amd64</li>
+            <li><strong>Image type:</strong> dvd</li>
+            <li><strong>Mirror:</strong> any nearby mirror is fine</li>
+          </ul>
+          <p>
+            This downloads a <code>.iso</code> file. The &ldquo;dvd&rdquo; image works for
+            both optical media and USB drives. Verify the SHA-256 checksum against the value
+            listed on the download page before proceeding.
+          </p>
+
+          <h3>Write the image to USB (Windows)</h3>
+          <p>
+            Download <a href="https://rufus.ie" target="_blank" rel="noopener noreferrer">Rufus</a>
+            (free, no install required). Insert your USB drive, then:
+          </p>
+          <ol class="how-it-works" style="color: inherit; gap: 0.5rem;">
+            <li style="color: inherit;">Open Rufus. Select your USB drive under <strong>Device</strong>.</li>
+            <li style="color: inherit;">Click <strong>Select</strong> and browse to the OPNsense ISO.</li>
+            <li style="color="inherit;">Leave <strong>Partition scheme</strong> as GPT and <strong>Target system</strong> as UEFI (non-CSM).</li>
+            <li style="color="inherit;">Click <strong>Start</strong>. If Rufus asks whether to write in ISO or DD mode, choose <strong>Write in DD Image mode</strong>.</li>
+            <li style="color="inherit;">Accept the warning that the drive will be wiped, and wait for the write to complete.</li>
+          </ol>
+
+          <h3>Write the image to USB (macOS / Linux)</h3>
+          <p>
+            Identify the USB device with <code>diskutil list</code> (macOS) or <code>lsblk</code> (Linux),
+            then write the image:
+          </p>
+          <pre><code>sudo dd if=OPNsense-*.iso of=/dev/rdiskN bs=1m status=progress</code></pre>
+          <p>
+            Replace <code>/dev/rdiskN</code> with your actual USB device identifier. Double-check this
+            before running &mdash; writing to the wrong device is unrecoverable.
+          </p>
+
+          <h2>Part 3: Installing OPNsense</h2>
+
+          <h3>Boot from USB</h3>
+          <p>
+            Connect the USB drive to the HP ProDesk, attach a monitor and keyboard, and power on.
+            Press <strong>F9</strong> during the HP POST screen to open the one-time boot menu.
+            Select your USB drive from the list. If it doesn&rsquo;t appear, enter BIOS setup
+            with <strong>F10</strong> and ensure <em>USB Storage Boot</em> is enabled and Secure Boot
+            is disabled (OPNsense does not require Secure Boot and it can interfere with the boot process).
+          </p>
+
+          <h3>Run the installer</h3>
+          <p>
+            OPNsense boots to a live environment and presents a login prompt. Log in with
+            username <strong>installer</strong> and password <strong>opnsense</strong>. The
+            guided installer will launch automatically.
+          </p>
+          <ul class="feature-list">
+            <li>Accept the default keymap (or select UK if preferred).</li>
+            <li>Choose <strong>Install (UFS)</strong> for a straightforward single-disk setup. ZFS is also available if you prefer it, but UFS is perfectly adequate for a router workload.</li>
+            <li>Select the internal drive (typically <code>sda</code> or <code>ada0</code>) as the installation target. The USB drive will appear separately &mdash; do not select it.</li>
+            <li>Confirm and allow the installer to write to disk. This takes about two minutes.</li>
+            <li>When prompted to set a root password, set a strong one and note it down.</li>
+            <li>Reboot when instructed, and remove the USB drive.</li>
+          </ul>
+
+          <h2>Part 4: Basic configuration for YouFibre</h2>
+
+          <h3>Initial interface assignment</h3>
+          <p>
+            On first boot, OPNsense presents a console menu. Before accessing the web
+            interface you need to assign your network interfaces. Select option
+            <strong>1) Assign interfaces</strong>.
+          </p>
+          <p>
+            With the HP ProDesk and the Intel X550-T2 fitted, you will typically see three
+            interfaces detected:
+          </p>
+          <ul class="feature-list">
+            <li><strong>em0</strong> &mdash; the onboard Intel I219-LM Gigabit port</li>
+            <li><strong>ix0</strong> and <strong>ix1</strong> &mdash; the two 10GbE ports on the X550-T2</li>
+          </ul>
+          <p>
+            Plug a cable from your YouFibre ONT into the first 10GbE port on the X550-T2,
+            and a cable from your LAN switch into the second port. OPNsense will show the MAC
+            addresses for each interface; you can use these to confirm which port is which.
+            Assign as follows:
+          </p>
+          <ul class="feature-list">
+            <li><strong>WAN:</strong> ix0 (connected to the YouFibre ONT)</li>
+            <li><strong>LAN:</strong> ix1 (connected to your switch)</li>
+          </ul>
+          <p>
+            The onboard <code>em0</code> can be left unassigned for now, or assigned as a second
+            LAN or management interface later. When prompted about VLANs, answer <strong>No</strong>
+            &mdash; YouFibre does not require VLAN tagging on the WAN.
+          </p>
+
+          <h3>Set a LAN IP (optional)</h3>
+          <p>
+            OPNsense defaults to 192.168.1.1/24 on the LAN. If that suits your network,
+            leave it as is. If you need a different subnet, select option
+            <strong>2) Set interface IP address</strong> from the console menu and change the
+            LAN address now, before connecting clients.
+          </p>
+
+          <h3>Access the web GUI</h3>
+          <p>
+            Connect a device to the LAN side and open a browser to
+            <strong>https://192.168.1.1</strong> (or whatever LAN IP you set). Accept
+            the self-signed certificate warning. Log in with username <strong>root</strong>
+            and the password you set during installation.
+          </p>
+          <p>
+            The setup wizard will launch on first login. Run through it:
+          </p>
+          <ul class="feature-list">
+            <li>Set your hostname and domain (anything you like &mdash; these are internal only).</li>
+            <li>Set your preferred DNS servers, or leave them as defaults to use OPNsense&rsquo;s Unbound resolver.</li>
+            <li>On the <strong>WAN</strong> step: select <strong>DHCP</strong>. No username, no password, no PPPoE &mdash; YouFibre uses a plain DHCP handoff from the ONT. Leave all other WAN settings at their defaults.</li>
+            <li>On the <strong>LAN</strong> step: confirm or adjust the LAN IP and subnet.</li>
+            <li>Set a new admin password when prompted.</li>
+          </ul>
+          <p>
+            After completing the wizard, OPNsense will apply the settings and reload. Your
+            WAN interface should come up within a few seconds and pull a DHCP lease from
+            YouFibre. You can verify this under <strong>Interfaces &rarr; Overview</strong>.
+          </p>
+
+          <h3>Confirm connectivity</h3>
+          <p>
+            Go to <strong>Interfaces &rarr; Overview</strong> and confirm the WAN interface
+            shows an IPv4 address in the YouFibre range. Then run a quick ping test from the
+            console: select option <strong>7) Ping host</strong> and ping 8.8.8.8. If you
+            get replies, the connection is working.
+          </p>
+          <p>
+            At this point your router is up and passing traffic. Clients on the LAN will
+            receive DHCP addresses from OPNsense and reach the internet through YouFibre.
+          </p>
+
+          <h3>MTU</h3>
+          <p>
+            Leave the WAN MTU at the default 1500. The YouFibre ONT does not support jumbo
+            frames on the WAN side. On the LAN side and between internal hosts, jumbo frames
+            are fine if your switch and NICs support them, but for the WAN interface, 1500
+            is correct.
+          </p>
+
+          <h3>Firewall defaults</h3>
+          <p>
+            OPNsense ships with sane defaults: all inbound traffic on WAN is blocked by
+            default, and outbound traffic from LAN is permitted through NAT. You don&rsquo;t
+            need to add any rules to get basic internet access working. Additional rules
+            (port forwards, VPN, etc.) can be added later as needed.
+          </p>
+
+          <h2>What next</h2>
+          <p>
+            From here the obvious next steps depend on your use case. I cover a few
+            in other posts on this site:
+          </p>
+          <ul class="feature-list">
+            <li><a href="opnsense-youfibre-setup.html">Dual-WAN failover configuration in OPNsense</a> &mdash; adding a second ISP as automatic standby</li>
+            <li><a href="youfibre-static-ip.html">Adding a static IP to your YouFibre connection</a> &mdash; useful if you self-host services</li>
+          </ul>
+
+          <div class="blog-post__referral">
+            <p>
+              If you&rsquo;re not yet on YouFibre and this has been useful, you can use my
+              referral code <strong>KCR5KH</strong> when you sign up. Both of us may receive
+              a reward once your installation is complete and your first bill is paid.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre&rsquo;s official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>

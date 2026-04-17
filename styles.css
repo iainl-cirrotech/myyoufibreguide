@@ -945,6 +945,233 @@ h3 { font-size: 1.05rem; }
 
 
 /* =============================================
+   QUICK VERDICT
+============================================= */
+.verdict-summary {
+  font-size: 1rem;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--colour-primary-light);
+  border-left: 4px solid var(--colour-primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  line-height: 1.6;
+}
+
+.verdict-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 500px) {
+  .verdict-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.verdict-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.verdict-item--positive {
+  background-color: #f0faf4;
+  border: 1px solid #c3e6cb;
+  color: #1a5c32;
+}
+
+.verdict-item--neutral {
+  background-color: #fefce8;
+  border: 1px solid #f0d060;
+  color: #7a6000;
+}
+
+.verdict-item__icon {
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  margin-top: 0.05em;
+}
+
+.verdict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.code-inline {
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.1em;
+  color: var(--colour-primary);
+}
+
+
+/* =============================================
+   CALLOUT BOX
+============================================= */
+.callout {
+  border-radius: var(--radius);
+  padding: var(--space-md) var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.callout--referral {
+  background-color: var(--colour-primary-light);
+  border: 1px solid rgba(0, 85, 165, 0.2);
+}
+
+.callout--referral p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+
+/* =============================================
+   PROS & CONS
+============================================= */
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+@media (min-width: 600px) {
+  .pros-cons {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pros-cons__col-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid;
+}
+
+.pros-cons__col--pros .pros-cons__col-title {
+  color: #1a5c32;
+  border-color: #c3e6cb;
+}
+
+.pros-cons__col--cons .pros-cons__col-title {
+  color: #8b2020;
+  border-color: #f5c6cb;
+}
+
+.pros-cons__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.pros-cons__col--pros .pros-cons__list li,
+.pros-cons__col--cons .pros-cons__list li {
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--colour-text);
+}
+
+.pros-cons__col--pros .pros-cons__list li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: #1a5c32;
+  font-weight: 700;
+}
+
+.pros-cons__col--cons .pros-cons__list li::before {
+  content: '\2717';
+  position: absolute;
+  left: 0;
+  color: #8b2020;
+  font-weight: 700;
+}
+
+
+/* =============================================
+   FAQ ACCORDION
+   Uses native <details>/<summary> — no JS needed.
+============================================= */
+.faq {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.faq__item {
+  border-top: 1px solid var(--colour-border);
+}
+
+.faq__item:last-child {
+  border-bottom: 1px solid var(--colour-border);
+}
+
+.faq__q {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--colour-text);
+  padding: var(--space-md) 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  list-style: none;
+  line-height: 1.45;
+  user-select: none;
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__q::after {
+  content: '+';
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--colour-primary);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq__item details[open] .faq__q::after {
+  content: '\2212';
+}
+
+.faq__a {
+  padding-bottom: var(--space-lg);
+  padding-right: var(--space-sm);
+}
+
+.faq__a p {
+  font-size: 0.95rem;
+  color: var(--colour-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.faq__a p + p {
+  margin-top: var(--space-sm);
+}
+
+
+/* =============================================
    16. SITE FOOTER
 ============================================= */
 .site-footer {

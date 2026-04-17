@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HTTPS for Self-Hosted Services: ACME, Let's Encrypt &amp; Cloudflare DNS on OPNsense | YouFibreGuide</title>
+  <meta name="description" content="How to use OPNsense's ACME client to issue and auto-renew Let's Encrypt certificates using a Cloudflare DNS challenge, then wire them into HAProxy for HTTPS on all your self-hosted services.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/acme-letsencrypt-cloudflare-opnsense.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HTTPS for Self-Hosted Services: ACME, Let's Encrypt &amp; Cloudflare DNS on OPNsense | YouFibreGuide">
+  <meta property="og:description" content="Use OPNsense's ACME client with a Cloudflare DNS challenge to get free, auto-renewing Let's Encrypt certificates for your self-hosted services, then attach them to HAProxy.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/acme-letsencrypt-cloudflare-opnsense.html">
+  <meta property="article:published_time" content="2026-03-15">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HTTPS for Self-Hosted Services: ACME, Let's Encrypt &amp; Cloudflare DNS on OPNsense">
+  <meta name="twitter:description" content="Free, auto-renewing HTTPS for self-hosted services using OPNsense, ACME, Let's Encrypt, and Cloudflare DNS challenge.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "HTTPS for Self-Hosted Services: ACME, Let's Encrypt and Cloudflare DNS on OPNsense",
+    "description": "How to use OPNsense's ACME client to issue and auto-renew Let's Encrypt certificates using a Cloudflare DNS challenge, then wire them into HAProxy for HTTPS on all self-hosted services.",
+    "datePublished": "2026-03-15",
+    "dateModified": "2026-03-15",
+    "url": "https://www.myyoufibreguide.com/blog/acme-letsencrypt-cloudflare-opnsense.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/acme-letsencrypt-cloudflare-opnsense.html"
+    },
+    "keywords": ["ACME", "Let's Encrypt", "Cloudflare", "OPNsense", "HAProxy", "SSL", "TLS", "DNS challenge", "self-hosting", "HTTPS", "YouFibre"],
+    "isPartOf": {
+      "@type": "CreativeWorkSeries",
+      "name": "Self-Hosting with OPNsense and HAProxy"
+    }
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section section--alt blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2026-03-15">15 March 2026</time>
+            <span class="blog-card__tag">Self-Hosting</span>
+          </div>
+          <h1 id="post-heading">HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS on OPNsense</h1>
+          <p class="blog-post__series-note">
+            Part 3 of 3 &mdash; <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
+            <a href="reverse-proxy-explained.html">&larr; Part 1: What is a reverse proxy? Self-hosting explained</a><br>
+            <a href="haproxy-opnsense-reverse-proxy.html">&larr; Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</a>
+          </p>
+        </div>
+
+        <div class="blog-post__body">
+
+          <p>
+            At the end of Part 2, HAProxy is routing requests to the right internal services
+            based on hostname &mdash; but with a self-signed certificate that browsers flag
+            as untrusted. This post replaces that with a proper certificate from
+            Let&rsquo;s Encrypt: free, browser-trusted, and set to renew automatically.
+          </p>
+          <p>
+            The method used here is a <strong>DNS challenge</strong> via Cloudflare. This
+            is the best approach for home self-hosting because it doesn't require port 80
+            to be open and works even for subdomains that aren't directly accessible from
+            the internet during validation. OPNsense's ACME client handles the whole
+            process, including automatic renewal.
+          </p>
+
+          <h2>Concepts: ACME, Let&rsquo;s Encrypt, and DNS challenges</h2>
+
+          <h3>What ACME is</h3>
+          <p>
+            ACME (Automatic Certificate Management Environment) is the protocol that Let&rsquo;s
+            Encrypt uses to verify that you control a domain before issuing a certificate.
+            It's also the same protocol that OPNsense's certificate client speaks. You don't
+            interact with ACME directly; the client handles the exchange.
+          </p>
+
+          <h3>What a DNS challenge is</h3>
+          <p>
+            To issue a certificate, Let&rsquo;s Encrypt needs to confirm you control the domain.
+            There are two common ways to prove this:
+          </p>
+          <ul class="feature-list">
+            <li>
+              <strong>HTTP challenge:</strong> Let&rsquo;s Encrypt fetches a specific file from
+              your web server over port 80. This requires port 80 to be open and reachable
+              from the internet at the time of issuance.
+            </li>
+            <li>
+              <strong>DNS challenge:</strong> Your ACME client creates a temporary TXT record
+              in your domain's DNS. Let&rsquo;s Encrypt checks for that record. Once it's confirmed,
+              the certificate is issued and the record is deleted. No port needs to be open during
+              this process.
+            </li>
+          </ul>
+          <p>
+            The DNS challenge is preferable for home setups because it works for wildcard
+            certificates (<code>*.example.com</code>), doesn't require port 80 to be
+            exposed, and works even if your services aren't yet reachable from the internet.
+          </p>
+
+          <h3>Why Cloudflare for DNS</h3>
+          <p>
+            Cloudflare provides a free DNS service with a well-documented API. OPNsense's
+            ACME plugin has built-in support for Cloudflare's API, which means the certificate
+            client can create and delete the TXT records automatically during validation.
+            You don't need to do anything manually after initial setup &mdash; renewals
+            happen entirely hands-free.
+          </p>
+          <p>
+            If your domain isn't currently on Cloudflare, you can either transfer it (free)
+            or change just the nameservers to point at Cloudflare while keeping your domain
+            registered elsewhere. Either way, Cloudflare just needs to be authoritative for
+            the DNS zone.
+          </p>
+
+          <h2>Step 1: Get a Cloudflare API token</h2>
+          <p>
+            Don't use your main Cloudflare account API key for this. Create a scoped token
+            that can only do what the ACME client needs:
+          </p>
+          <ol class="feature-list">
+            <li>Log in to your Cloudflare dashboard and go to <strong>My Profile &rarr; API Tokens</strong>.</li>
+            <li>Click <strong>Create Token</strong>.</li>
+            <li>Use the <strong>Edit zone DNS</strong> template.</li>
+            <li>Under <strong>Zone Resources</strong>, restrict the token to the specific zone (domain) you're issuing certificates for.</li>
+            <li>Under <strong>Permissions</strong>, confirm it has <code>Zone &rarr; DNS &rarr; Edit</code>. Remove any other permissions.</li>
+            <li>Create the token and copy it somewhere safe. You won't be able to view it again.</li>
+          </ol>
+          <p>
+            This token is what OPNsense will use to create the TXT records during certificate
+            validation. Keeping it scoped to DNS edit on one zone limits the blast radius
+            if it were ever compromised.
+          </p>
+
+          <h2>Step 2: Install the ACME plugin on OPNsense</h2>
+          <ol class="feature-list">
+            <li>Go to <strong>System &rarr; Firmware &rarr; Plugins</strong>.</li>
+            <li>Search for <code>os-acme-client</code>.</li>
+            <li>Install it.</li>
+            <li>After installation, it appears under <strong>Services &rarr; ACME Client</strong>.</li>
+          </ol>
+
+          <h2>Step 3: Configure an ACME account</h2>
+          <p>
+            Before issuing any certificates, you need to register an account with Let&rsquo;s Encrypt:
+          </p>
+          <ol class="feature-list">
+            <li>Go to <strong>Services &rarr; ACME Client &rarr; Accounts</strong>.</li>
+            <li>Click <strong>Add</strong>.</li>
+            <li>Enter your email address. Let&rsquo;s Encrypt uses this to send expiry warnings (though with automatic renewal, you shouldn't need them).</li>
+            <li>
+              Leave the ACME URL set to <strong>Let&rsquo;s Encrypt Production</strong>.
+              During testing you can use the staging URL to avoid rate limits, but switch
+              to production before issuing certificates you'll actually use.
+            </li>
+            <li>Save and click <strong>Register</strong> to create the account. A green status indicator confirms it registered successfully.</li>
+          </ol>
+
+          <h2>Step 4: Add a Cloudflare DNS challenge method</h2>
+          <ol class="feature-list">
+            <li>Go to <strong>Services &rarr; ACME Client &rarr; Challenge Types</strong>.</li>
+            <li>Click <strong>Add</strong>.</li>
+            <li>Set the <strong>Name</strong> to something descriptive, e.g. <code>cloudflare_dns</code>.</li>
+            <li>Set the <strong>Challenge Type</strong> to <code>DNS-01</code>.</li>
+            <li>Set the <strong>DNS Service</strong> to <code>Cloudflare</code>.</li>
+            <li>Paste your Cloudflare API token into the <strong>API Token</strong> field.</li>
+            <li>Save.</li>
+          </ol>
+
+          <h2>Step 5: Issue a certificate</h2>
+          <p>
+            Go to <strong>Services &rarr; ACME Client &rarr; Certificates</strong> and click
+            <strong>Add</strong>. Fill in the certificate details:
+          </p>
+          <ul class="feature-list">
+            <li><strong>Common Name:</strong> your primary domain, e.g. <code>example.com</code></li>
+            <li>
+              <strong>Alt Names (SANs):</strong> add any subdomains you want the certificate
+              to cover. Add each one separately: <code>nextcloud.example.com</code>,
+              <code>blog.example.com</code>, etc. Alternatively, use a wildcard:
+              <code>*.example.com</code> &mdash; this covers all subdomains with one cert.
+            </li>
+            <li><strong>ACME Account:</strong> select the account you registered in Step 3.</li>
+            <li><strong>Challenge Type:</strong> select the <code>cloudflare_dns</code> method from Step 4.</li>
+            <li>
+              <strong>Auto Renewal:</strong> enable this. OPNsense will automatically renew
+              the certificate before it expires (Let&rsquo;s Encrypt certificates are valid for
+              90 days; renewal typically happens at 60 days).
+            </li>
+          </ul>
+          <p>
+            Save, then click the <strong>Issue / Renew</strong> button next to the certificate.
+            OPNsense will contact Let&rsquo;s Encrypt, create the TXT record in Cloudflare,
+            wait for propagation, complete the challenge, and download the certificate. This
+            takes between 30 seconds and a few minutes. A green status indicates success.
+          </p>
+          <p>
+            If it fails, check the ACME client log under
+            <strong>Services &rarr; ACME Client &rarr; Log File</strong>. The most common
+            failure causes are an incorrect API token, a typo in the domain name, or the
+            TXT record not propagating quickly enough (rare with Cloudflare's fast DNS).
+          </p>
+
+          <h2>Step 6: Wire the certificate into HAProxy</h2>
+          <p>
+            Once the certificate is issued, it appears in OPNsense's certificate store
+            under <strong>System &rarr; Trust &rarr; Certificates</strong>. Now attach it
+            to the HAProxy frontend you configured in Part 2:
+          </p>
+          <ol class="feature-list">
+            <li>Go to <strong>Services &rarr; HAProxy &rarr; Frontend</strong>.</li>
+            <li>Edit your HTTPS frontend.</li>
+            <li>
+              Under <strong>SSL Certificates</strong>, remove the self-signed certificate and
+              add the Let&rsquo;s Encrypt certificate issued in Step 5.
+            </li>
+            <li>Save and click <strong>Apply</strong>.</li>
+          </ol>
+          <p>
+            Visit one of your configured hostnames in a browser. The padlock should now show
+            as valid and the certificate should be issued by Let&rsquo;s Encrypt. No more warnings.
+          </p>
+
+          <h2>Step 7: Automatic HAProxy reload on renewal</h2>
+          <p>
+            When ACME renews the certificate, HAProxy needs to reload to pick up the new
+            certificate. OPNsense can do this automatically:
+          </p>
+          <ol class="feature-list">
+            <li>Go to <strong>Services &rarr; ACME Client &rarr; Settings</strong>.</li>
+            <li>Enable <strong>HAProxy Integration</strong>.</li>
+            <li>Save.</li>
+          </ol>
+          <p>
+            With this enabled, OPNsense will reload HAProxy automatically whenever a
+            certificate is renewed. No manual intervention needed &mdash; the setup is
+            genuinely set-and-forget.
+          </p>
+
+          <h2>Wildcard certificates</h2>
+          <p>
+            If you use a wildcard certificate (<code>*.example.com</code>), a single
+            certificate covers every subdomain. This simplifies management: one renewal,
+            one HAProxy certificate entry, every service covered. The DNS challenge is
+            the only method Let&rsquo;s Encrypt supports for wildcard issuance, which is
+            another reason the Cloudflare DNS challenge is the right choice for this setup.
+          </p>
+          <p>
+            The trade-off is that a wildcard certificate covers all subdomains indiscriminately.
+            If you prefer to issue a separate certificate per service (which gives you more
+            granular expiry and revocation control), you can &mdash; just add each service as
+            its own certificate entry in the ACME client. Both approaches work with HAProxy.
+          </p>
+
+          <h2>Summary: what you now have</h2>
+          <p>
+            After completing all three parts of this series:
+          </p>
+          <ul class="feature-list">
+            <li>HAProxy on OPNsense is receiving all inbound HTTPS traffic on port 443.</li>
+            <li>ACL rules route each hostname to the correct internal service.</li>
+            <li>All traffic is encrypted with a trusted Let&rsquo;s Encrypt certificate.</li>
+            <li>Certificates renew automatically, with HAProxy reloaded to apply the new certificate.</li>
+            <li>No port 80 exposure needed during validation thanks to the Cloudflare DNS challenge.</li>
+          </ul>
+          <p>
+            This is a production-grade HTTPS setup running entirely on your home router,
+            made practical by a YouFibre FTTP connection with a static IP. The total
+            additional cost is zero &mdash; ACME, Let&rsquo;s Encrypt, and Cloudflare DNS
+            are all free, and HAProxy is included in the OPNsense plugin ecosystem at
+            no charge.
+          </p>
+
+          <div class="blog-post__referral">
+            <p>
+              If you're not yet on YouFibre, this whole setup becomes possible once you have
+              a reliable full-fibre connection with a static IP. Referral code
+              <strong>KCR5KH</strong> is available for new customers.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+
+          <nav class="blog-post__series-nav" aria-label="Series navigation">
+            <p><strong>Series: Self-Hosting with OPNsense and HAProxy</strong></p>
+            <ol>
+              <li><a href="reverse-proxy-explained.html">Part 1: What is a reverse proxy? Self-hosting explained</a></li>
+              <li><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</a></li>
+              <li><strong>Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</strong> &mdash; you are here</li>
+            </ol>
+          </nav>
+
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>

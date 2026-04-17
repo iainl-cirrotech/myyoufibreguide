@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>What is a Reverse Proxy? Self-Hosting Explained | YouFibreGuide</title>
+  <meta name="description" content="A plain-English explanation of what a reverse proxy is, why you need one when self-hosting websites or services from home, and how it fits into an OPNsense setup.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/reverse-proxy-explained.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="What is a Reverse Proxy? Self-Hosting Explained | YouFibreGuide">
+  <meta property="og:description" content="A plain-English explanation of what a reverse proxy is, why you need one when self-hosting websites or services from home, and how it fits into an OPNsense setup.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/reverse-proxy-explained.html">
+  <meta property="article:published_time" content="2026-03-01">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="What is a Reverse Proxy? Self-Hosting Explained">
+  <meta name="twitter:description" content="A plain-English explanation of what a reverse proxy is, why you need one when self-hosting from home, and how it fits into an OPNsense setup.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "What is a Reverse Proxy? Self-Hosting Explained",
+    "description": "A plain-English explanation of what a reverse proxy is, why you need one when self-hosting websites or services from home, and how it fits into an OPNsense setup.",
+    "datePublished": "2026-03-01",
+    "dateModified": "2026-03-01",
+    "url": "https://www.myyoufibreguide.com/blog/reverse-proxy-explained.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/reverse-proxy-explained.html"
+    },
+    "keywords": ["reverse proxy", "self-hosting", "HAProxy", "OPNsense", "home server", "YouFibre", "HTTPS", "Let's Encrypt"],
+    "isPartOf": {
+      "@type": "CreativeWorkSeries",
+      "name": "Self-Hosting with OPNsense and HAProxy"
+    }
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section section--alt blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2026-03-01">1 March 2026</time>
+            <span class="blog-card__tag">Self-Hosting</span>
+          </div>
+          <h1 id="post-heading">What is a reverse proxy? Self-hosting explained</h1>
+          <p class="blog-post__series-note">
+            Part 1 of 3 &mdash; <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
+            <a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy &rarr;</a><br>
+            <a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS &rarr;</a>
+          </p>
+        </div>
+
+        <div class="blog-post__body">
+
+          <p>
+            YouFibre gives you a fast, symmetrical FTTP connection and, if you add the static
+            IP option, a stable public address to point domain names at. That combination makes
+            self-hosting from home genuinely practical. But once you start running more than one
+            service, you hit a problem: a server can only listen on one port at a time for a
+            given protocol. How do you host five different websites, or a web app alongside a
+            Nextcloud instance, when you only have one public IP and one port 443?
+          </p>
+          <p>
+            The answer is a <strong>reverse proxy</strong>.
+          </p>
+
+          <h2>What a forward proxy does (briefly)</h2>
+          <p>
+            You may have come across the term &ldquo;proxy&rdquo; in the context of office networks or
+            privacy tools: a forward proxy sits between your device and the internet, forwarding
+            your requests outbound on your behalf. It's used to cache content, enforce policies,
+            or mask your IP. That's not what we're talking about here.
+          </p>
+
+          <h2>What a reverse proxy does</h2>
+          <p>
+            A reverse proxy sits at the edge of your network, facing the internet, and routes
+            <em>incoming</em> requests to the right server or service on the inside. It works
+            in the opposite direction: instead of acting on behalf of a client going outbound,
+            it acts on behalf of a server receiving inbound traffic.
+          </p>
+          <p>
+            The clearest way to picture it is this:
+          </p>
+          <ul class="feature-list">
+            <li>A visitor's browser connects to your domain, say <code>blog.example.com</code>, on port 443 (HTTPS).</li>
+            <li>The request arrives at your public IP address, which is your router.</li>
+            <li>The reverse proxy inspects the <strong>hostname</strong> in the request header.</li>
+            <li>Based on that hostname, it forwards the request to the correct internal server &mdash; for example, a Docker container running on port 8080.</li>
+            <li>The server responds, and the reverse proxy sends that response back to the visitor.</li>
+          </ul>
+          <p>
+            The visitor never connects directly to the internal server. From their perspective,
+            they connected to your domain and got a response. What sits behind the proxy is
+            invisible to them.
+          </p>
+
+          <h2>Why this matters for home self-hosting</h2>
+          <p>
+            Without a reverse proxy, every service you want to expose to the internet needs its
+            own port number. You end up with visitors having to type addresses like
+            <code>mysite.example.com:8443</code> or <code>mysite.example.com:3000</code>.
+            That's inconvenient, unprofessional for anything you want to share, and harder
+            to secure consistently.
+          </p>
+          <p>
+            With a reverse proxy, all HTTPS traffic comes in on port 443, the standard port
+            that browsers use by default. The proxy routes each request to the right service
+            based on the domain name. Visitors just use normal URLs. You handle TLS
+            termination in one place, manage certificates once, and apply security rules
+            centrally.
+          </p>
+
+          <h2>The role of HAProxy</h2>
+          <p>
+            HAProxy is a battle-tested, open-source load balancer and proxy that's been a
+            fixture in production infrastructure for decades. It's capable of handling
+            enormous traffic volumes, but it scales down just as well to a single home server.
+            OPNsense includes HAProxy as a plugin, which means you can run your reverse proxy
+            directly on the same machine as your firewall &mdash; no additional hardware required.
+          </p>
+          <p>
+            There are other reverse proxy options. Nginx Proxy Manager and Caddy are popular
+            choices that are often easier to get started with. The reason I use HAProxy on
+            OPNsense is consolidation: one machine, one configuration interface, one place
+            to manage firewall rules and proxying together. For a home lab or small
+            self-hosted setup, that's a significant advantage.
+          </p>
+
+          <h2>The role of HTTPS and TLS certificates</h2>
+          <p>
+            A reverse proxy handles routing, but modern web standards also require HTTPS for
+            practically every public-facing site. Browsers will show security warnings for
+            plain HTTP, and some features simply don't work without a valid TLS certificate.
+          </p>
+          <p>
+            The standard way to get free, automatically-renewing certificates for self-hosted
+            services is <strong>Let&rsquo;s Encrypt</strong> via the <strong>ACME</strong> protocol.
+            OPNsense has a built-in ACME client that integrates directly with HAProxy.
+            Rather than opening port 80 for HTTP validation, you can use a
+            <strong>DNS challenge</strong>: the ACME client creates a temporary DNS record
+            to prove you control the domain, without needing any inbound port exposed during
+            the validation process. Cloudflare's DNS API makes this straightforward to automate.
+          </p>
+
+          <h2>What the rest of this series covers</h2>
+          <p>
+            This post explains the concepts. The next two posts cover the practical setup:
+          </p>
+          <ul class="feature-list">
+            <li>
+              <strong><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense</a></strong> &mdash;
+              installing the HAProxy plugin, configuring frontends, backends, and ACLs to route
+              traffic by hostname to the right internal services.
+            </li>
+            <li>
+              <strong><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: ACME, Let&rsquo;s Encrypt, and Cloudflare DNS</a></strong> &mdash;
+              using OPNsense's ACME client to issue and automatically renew Let&rsquo;s Encrypt
+              certificates using a Cloudflare DNS challenge, and wiring those certificates into HAProxy.
+            </li>
+          </ul>
+          <p>
+            If you're already comfortable with the concepts and just want the setup steps,
+            skip ahead to Part 2. If you're new to self-hosting or want to understand what
+            you're actually configuring before you configure it, start here.
+          </p>
+
+          <h2>Prerequisites</h2>
+          <p>
+            Before working through Parts 2 and 3, you'll need:
+          </p>
+          <ul class="feature-list">
+            <li>An OPNsense router (this series was written against OPNsense 24.x)</li>
+            <li>A YouFibre connection with a static IP &mdash; see <a href="youfibre-static-ip.html">Adding a static IP to your YouFibre connection</a></li>
+            <li>A domain name pointing at your static IP</li>
+            <li>A Cloudflare account managing DNS for that domain</li>
+            <li>At least one internal service to expose (a web server, a Docker container, a NAS web UI, or similar)</li>
+          </ul>
+          <p>
+            You don't need to be an expert in any of these. The follow-up posts will walk
+            through each step in full.
+          </p>
+
+          <div class="blog-post__referral">
+            <p>
+              If you're not yet on YouFibre and this has been useful, you can use my referral
+              code <strong>KCR5KH</strong> when you sign up. A static IP combined with a fast
+              symmetrical connection makes self-hosting from home genuinely practical.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+
+          <nav class="blog-post__series-nav" aria-label="Series navigation">
+            <p><strong>Series: Self-Hosting with OPNsense and HAProxy</strong></p>
+            <ol>
+              <li><strong>Part 1: What is a reverse proxy? Self-hosting explained</strong> &mdash; you are here</li>
+              <li><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</a></li>
+              <li><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</a></li>
+            </ol>
+          </nav>
+
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>

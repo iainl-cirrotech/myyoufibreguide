@@ -5,8 +5,16 @@
     <link>https://www.myyoufibreguide.com/blog.html</link>
     <description>Notes, updates, and tips from two-plus years of running YouFibre as the backbone of a home office and busy household.</description>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 16 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.myyoufibreguide.com/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>Building an OPNsense Router on an HP ProDesk 400 G5 SFF for YouFibre</title>
+      <link>https://www.myyoufibreguide.com/blog/hp-prodesk-nic-opnsense-youfibre-setup.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/hp-prodesk-nic-opnsense-youfibre-setup.html</guid>
+      <pubDate>Fri, 17 Apr 2026 00:00:00 +0000</pubDate>
+      <description>A full walkthrough: fitting an Intel X550-T2 10GbE PCIe NIC into the HP ProDesk 400 G5 SFF chassis, creating a bootable OPNsense USB installer, installing OPNsense, and doing the initial configuration for a YouFibre FTTP connection.</description>
+    </item>
 
     <item>
       <title>Stuck at 1 Gbps after upgrading to You2000? Here's why</title>
@@ -25,11 +33,35 @@
     </item>
 
     <item>
-      <title>Two years with YouFibre: what's changed, what hasn't</title>
+      <title>HTTPS for Self-Hosted Services: ACME, Let&apos;s Encrypt and Cloudflare DNS on OPNsense</title>
+      <link>https://www.myyoufibreguide.com/blog/acme-letsencrypt-cloudflare-opnsense.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/acme-letsencrypt-cloudflare-opnsense.html</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 +0000</pubDate>
+      <description>Part 3 of 3. Use OPNsense&apos;s ACME client with a Cloudflare DNS challenge to get free, auto-renewing Let&apos;s Encrypt certificates for self-hosted services, then wire them into HAProxy. No port 80 exposure required.</description>
+    </item>
+
+    <item>
+      <title>HAProxy on OPNsense &mdash; Configuring Your Reverse Proxy</title>
+      <link>https://www.myyoufibreguide.com/blog/haproxy-opnsense-reverse-proxy.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/haproxy-opnsense-reverse-proxy.html</guid>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+      <description>Part 2 of 3. Install the HAProxy plugin on OPNsense and configure frontends, backends, and ACL rules to route multiple self-hosted services by hostname on a single public IP.</description>
+    </item>
+
+    <item>
+      <title>What is a Reverse Proxy? Self-Hosting Explained</title>
+      <link>https://www.myyoufibreguide.com/blog/reverse-proxy-explained.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/reverse-proxy-explained.html</guid>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 +0000</pubDate>
+      <description>Part 1 of 3. A plain-English explanation of what a reverse proxy is and why you need one to host multiple services on a single IP. Covers the concepts behind HAProxy, HTTPS, and DNS challenges before the hands-on setup in Parts 2 and 3.</description>
+    </item>
+
+    <item>
+      <title>Two years with YouFibre: what&apos;s changed, what hasn&apos;t</title>
       <link>https://www.myyoufibreguide.com/blog/two-years-with-youfibre.html</link>
       <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/two-years-with-youfibre.html</guid>
       <pubDate>Sun, 01 Mar 2026 00:00:00 +0000</pubDate>
-      <description>A quick update after hitting the two-year mark. Pricing has moved slightly, a couple of short outages, and a new package tier. Here's whether I'd still make the same choice today.</description>
+      <description>A quick update after hitting the two-year mark. Pricing has moved slightly, a couple of short outages, and a new package tier. Here&apos;s whether I&apos;d still make the same choice today.</description>
     </item>
 
     <item>
