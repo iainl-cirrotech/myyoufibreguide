@@ -116,12 +116,12 @@
 
           <h2>What you need</h2>
           <ul class="feature-list">
-            <li><strong>HP ProDesk 400 G5 SFF</strong> &mdash; sourceable from eBay for around &pound;50&ndash;80. Make sure it has the i3-8100 or better and at least 8&nbsp;GB RAM. 16&nbsp;GB is preferable.</li>
-            <li><strong>Intel X550-T2 dual-port 10GbE PCIe NIC</strong> &mdash; or any OEM equivalent (Dell, HP OEM versions of the same chip are identical). Look for the <em>low-profile bracket</em> variant, or a card that ships with both brackets. The SFF chassis requires a half-height card.</li>
-            <li><strong>A USB drive</strong> &mdash; 8&nbsp;GB or larger. It will be wiped.</li>
-            <li><strong>A monitor and keyboard</strong> &mdash; needed for the initial install only.</li>
-            <li><strong>A Torx T15 screwdriver</strong> &mdash; the ProDesk uses a T15 for the chassis thumb screw and some internal mounts.</li>
-            <li><strong>An anti-static wrist strap</strong> &mdash; optional but good practice.</li>
+            <li><strong>HP ProDesk 400 G5 SFF</strong> - sourceable from eBay for around &pound;50&ndash;80. Make sure it has the i3-8100 or better and at least 8&nbsp;GB RAM. 16&nbsp;GB is preferable.</li>
+            <li><strong>Intel X550-T2 dual-port 10GbE PCIe NIC</strong> - or any OEM equivalent (Dell, HP OEM versions of the same chip are identical). Look for the <em>low-profile bracket</em> variant, or a card that ships with both brackets. The SFF chassis requires a half-height card.</li>
+            <li><strong>A USB drive</strong> - 8&nbsp;GB or larger. It will be wiped.</li>
+            <li><strong>A monitor and keyboard</strong> - needed for the initial install only.</li>
+            <li><strong>A Torx T15 screwdriver</strong> - the ProDesk uses a T15 for the chassis thumb screw and some internal mounts.</li>
+            <li><strong>An anti-static wrist strap</strong> - optional but good practice.</li>
           </ul>
 
           <h2>Part 1: Fitting the PCIe NIC</h2>
@@ -137,7 +137,7 @@
           <h3>Check the bracket</h3>
           <p>
             The SFF chassis only accepts half-height (low-profile) PCIe cards. A full-height
-            card will physically not fit &mdash; the bracket will foul the chassis. The
+            card will physically not fit - the bracket will foul the chassis. The
             Intel X550-T2 OEM cards typically ship with a full-height bracket fitted and a
             low-profile bracket included separately. If yours only has a full-height bracket,
             they are available to buy separately for a few pounds. Swap the bracket before
@@ -150,7 +150,7 @@
             The ProDesk 400 G5 SFF has one PCIe&nbsp;3.0 x16 slot and one PCIe&nbsp;3.0 x1 slot.
             Use the x16 slot for the X550-T2. Remove the slot cover by unscrewing the single
             retaining screw at the top of the bracket opening, then sliding the cover out.
-            Keep the screw &mdash; you'll reuse it.
+            Keep the screw - you'll reuse it.
           </p>
 
           <h3>Seat the card</h3>
@@ -210,7 +210,7 @@
           <pre><code>sudo dd if=OPNsense-*.iso of=/dev/rdiskN bs=1m status=progress</code></pre>
           <p>
             Replace <code>/dev/rdiskN</code> with your actual USB device identifier. Double-check this
-            before running &mdash; writing to the wrong device is unrecoverable.
+            before running - writing to the wrong device is unrecoverable.
           </p>
 
           <h2>Part 3: Installing OPNsense</h2>
@@ -233,7 +233,7 @@
           <ul class="feature-list">
             <li>Accept the default keymap (or select UK if preferred).</li>
             <li>Choose <strong>Install (UFS)</strong> for a straightforward single-disk setup. ZFS is also available if you prefer it, but UFS is perfectly adequate for a router workload.</li>
-            <li>Select the internal drive (typically <code>sda</code> or <code>ada0</code>) as the installation target. The USB drive will appear separately &mdash; do not select it.</li>
+            <li>Select the internal drive (typically <code>sda</code> or <code>ada0</code>) as the installation target. The USB drive will appear separately - do not select it.</li>
             <li>Confirm and allow the installer to write to disk. This takes about two minutes.</li>
             <li>When prompted to set a root password, set a strong one and note it down.</li>
             <li>Reboot when instructed, and remove the USB drive.</li>
@@ -252,8 +252,8 @@
             interfaces detected:
           </p>
           <ul class="feature-list">
-            <li><strong>em0</strong> &mdash; the onboard Intel I219-LM Gigabit port</li>
-            <li><strong>ix0</strong> and <strong>ix1</strong> &mdash; the two 10GbE ports on the X550-T2</li>
+            <li><strong>em0</strong> - the onboard Intel I219-LM Gigabit port</li>
+            <li><strong>ix0</strong> and <strong>ix1</strong> - the two 10GbE ports on the X550-T2</li>
           </ul>
           <p>
             Plug a cable from your YouFibre ONT into the first 10GbE port on the X550-T2,
@@ -268,7 +268,7 @@
           <p>
             The onboard <code>em0</code> can be left unassigned for now, or assigned as a second
             LAN or management interface later. When prompted about VLANs, answer <strong>No</strong>
-            &mdash; YouFibre does not require VLAN tagging on the WAN.
+            - YouFibre does not require VLAN tagging on the WAN.
           </p>
 
           <h3>Set a LAN IP (optional)</h3>
@@ -290,9 +290,9 @@
             The setup wizard will launch on first login. Run through it:
           </p>
           <ul class="feature-list">
-            <li>Set your hostname and domain (anything you like &mdash; these are internal only).</li>
+            <li>Set your hostname and domain (anything you like - these are internal only).</li>
             <li>Set your preferred DNS servers, or leave them as defaults to use OPNsense&rsquo;s Unbound resolver.</li>
-            <li>On the <strong>WAN</strong> step: select <strong>DHCP</strong>. No username, no password, no PPPoE &mdash; YouFibre uses a plain DHCP handoff from the ONT. Leave all other WAN settings at their defaults.</li>
+            <li>On the <strong>WAN</strong> step: select <strong>DHCP</strong>. No username, no password, no PPPoE - YouFibre uses a plain DHCP handoff from the ONT. Leave all other WAN settings at their defaults.</li>
             <li>On the <strong>LAN</strong> step: confirm or adjust the LAN IP and subnet.</li>
             <li>Set a new admin password when prompted.</li>
           </ul>
@@ -336,8 +336,8 @@
             in other posts on this site:
           </p>
           <ul class="feature-list">
-            <li><a href="opnsense-youfibre-setup.html">Dual-WAN failover configuration in OPNsense</a> &mdash; adding a second ISP as automatic standby</li>
-            <li><a href="youfibre-static-ip.html">Adding a static IP to your YouFibre connection</a> &mdash; useful if you self-host services</li>
+            <li><a href="opnsense-youfibre-setup.html">Dual-WAN failover configuration in OPNsense</a> - adding a second ISP as automatic standby</li>
+            <li><a href="youfibre-static-ip.html">Adding a static IP to your YouFibre connection</a> - useful if you self-host services</li>
           </ul>
 
           <div class="blog-post__referral">

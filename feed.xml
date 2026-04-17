@@ -65,6 +65,14 @@
     </item>
 
     <item>
+      <title>TP-Link EAP653 Omada Wi-Fi 6 — single SSID and seamless roaming</title>
+      <link>https://www.myyoufibreguide.com/blog/tp-link-eap653-omada-seamless-wifi-roaming.html</link>
+      <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/tp-link-eap653-omada-seamless-wifi-roaming.html</guid>
+      <pubDate>Mon, 15 Dec 2025 00:00:00 +0000</pubDate>
+      <description>Running multiple ceiling-mounted TP-Link EAP653 access points on a wired backhaul means every room has full-strength Wi-Fi 6 coverage. How to configure the Omada controller so all your EAPs share a single SSID and devices hand off between them seamlessly — covering fast roaming (802.11r), band steering, and minimum RSSI thresholds.</description>
+    </item>
+
+    <item>
       <title>Adding a static IP to your YouFibre connection</title>
       <link>https://www.myyoufibreguide.com/blog/youfibre-static-ip.html</link>
       <guid isPermaLink="true">https://www.myyoufibreguide.com/blog/youfibre-static-ip.html</guid>

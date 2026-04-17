@@ -107,9 +107,9 @@
           </div>
           <h1 id="post-heading">What is a reverse proxy? Self-hosting explained</h1>
           <p class="blog-post__series-note">
-            Part 1 of 3 &mdash; <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
-            <a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy &rarr;</a><br>
-            <a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS &rarr;</a>
+            Part 1 of 3 - <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
+            <a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense - configuring your reverse proxy &rarr;</a><br>
+            <a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services - ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS &rarr;</a>
           </p>
         </div>
 
@@ -149,7 +149,7 @@
             <li>A visitor's browser connects to your domain, say <code>blog.example.com</code>, on port 443 (HTTPS).</li>
             <li>The request arrives at your public IP address, which is your router.</li>
             <li>The reverse proxy inspects the <strong>hostname</strong> in the request header.</li>
-            <li>Based on that hostname, it forwards the request to the correct internal server &mdash; for example, a Docker container running on port 8080.</li>
+            <li>Based on that hostname, it forwards the request to the correct internal server - for example, a Docker container running on port 8080.</li>
             <li>The server responds, and the reverse proxy sends that response back to the visitor.</li>
           </ul>
           <p>
@@ -180,7 +180,7 @@
             fixture in production infrastructure for decades. It's capable of handling
             enormous traffic volumes, but it scales down just as well to a single home server.
             OPNsense includes HAProxy as a plugin, which means you can run your reverse proxy
-            directly on the same machine as your firewall &mdash; no additional hardware required.
+            directly on the same machine as your firewall - no additional hardware required.
           </p>
           <p>
             There are other reverse proxy options. Nginx Proxy Manager and Caddy are popular
@@ -212,12 +212,12 @@
           </p>
           <ul class="feature-list">
             <li>
-              <strong><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense</a></strong> &mdash;
+              <strong><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense</a></strong> -
               installing the HAProxy plugin, configuring frontends, backends, and ACLs to route
               traffic by hostname to the right internal services.
             </li>
             <li>
-              <strong><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: ACME, Let&rsquo;s Encrypt, and Cloudflare DNS</a></strong> &mdash;
+              <strong><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: ACME, Let&rsquo;s Encrypt, and Cloudflare DNS</a></strong> -
               using OPNsense's ACME client to issue and automatically renew Let&rsquo;s Encrypt
               certificates using a Cloudflare DNS challenge, and wiring those certificates into HAProxy.
             </li>
@@ -234,7 +234,7 @@
           </p>
           <ul class="feature-list">
             <li>An OPNsense router (this series was written against OPNsense 24.x)</li>
-            <li>A YouFibre connection with a static IP &mdash; see <a href="youfibre-static-ip.html">Adding a static IP to your YouFibre connection</a></li>
+            <li>A YouFibre connection with a static IP - see <a href="youfibre-static-ip.html">Adding a static IP to your YouFibre connection</a></li>
             <li>A domain name pointing at your static IP</li>
             <li>A Cloudflare account managing DNS for that domain</li>
             <li>At least one internal service to expose (a web server, a Docker container, a NAS web UI, or similar)</li>
@@ -258,9 +258,9 @@
           <nav class="blog-post__series-nav" aria-label="Series navigation">
             <p><strong>Series: Self-Hosting with OPNsense and HAProxy</strong></p>
             <ol>
-              <li><strong>Part 1: What is a reverse proxy? Self-hosting explained</strong> &mdash; you are here</li>
-              <li><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</a></li>
-              <li><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</a></li>
+              <li><strong>Part 1: What is a reverse proxy? Self-hosting explained</strong> - you are here</li>
+              <li><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense - configuring your reverse proxy</a></li>
+              <li><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services - ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</a></li>
             </ol>
           </nav>
 

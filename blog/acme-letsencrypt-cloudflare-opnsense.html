@@ -105,11 +105,11 @@
             <time datetime="2026-03-15">15 March 2026</time>
             <span class="blog-card__tag">Self-Hosting</span>
           </div>
-          <h1 id="post-heading">HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS on OPNsense</h1>
+          <h1 id="post-heading">HTTPS for self-hosted services - ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS on OPNsense</h1>
           <p class="blog-post__series-note">
-            Part 3 of 3 &mdash; <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
+            Part 3 of 3 - <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
             <a href="reverse-proxy-explained.html">&larr; Part 1: What is a reverse proxy? Self-hosting explained</a><br>
-            <a href="haproxy-opnsense-reverse-proxy.html">&larr; Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</a>
+            <a href="haproxy-opnsense-reverse-proxy.html">&larr; Part 2: HAProxy on OPNsense - configuring your reverse proxy</a>
           </p>
         </div>
 
@@ -117,7 +117,7 @@
 
           <p>
             At the end of Part 2, HAProxy is routing requests to the right internal services
-            based on hostname &mdash; but with a self-signed certificate that browsers flag
+            based on hostname - but with a self-signed certificate that browsers flag
             as untrusted. This post replaces that with a proper certificate from
             Let&rsquo;s Encrypt: free, browser-trusted, and set to renew automatically.
           </p>
@@ -168,7 +168,7 @@
             Cloudflare provides a free DNS service with a well-documented API. OPNsense's
             ACME plugin has built-in support for Cloudflare's API, which means the certificate
             client can create and delete the TXT records automatically during validation.
-            You don't need to do anything manually after initial setup &mdash; renewals
+            You don't need to do anything manually after initial setup - renewals
             happen entirely hands-free.
           </p>
           <p>
@@ -243,7 +243,7 @@
               <strong>Alt Names (SANs):</strong> add any subdomains you want the certificate
               to cover. Add each one separately: <code>nextcloud.example.com</code>,
               <code>blog.example.com</code>, etc. Alternatively, use a wildcard:
-              <code>*.example.com</code> &mdash; this covers all subdomains with one cert.
+              <code>*.example.com</code> - this covers all subdomains with one cert.
             </li>
             <li><strong>ACME Account:</strong> select the account you registered in Step 3.</li>
             <li><strong>Challenge Type:</strong> select the <code>cloudflare_dns</code> method from Step 4.</li>
@@ -298,7 +298,7 @@
           </ol>
           <p>
             With this enabled, OPNsense will reload HAProxy automatically whenever a
-            certificate is renewed. No manual intervention needed &mdash; the setup is
+            certificate is renewed. No manual intervention needed - the setup is
             genuinely set-and-forget.
           </p>
 
@@ -313,7 +313,7 @@
           <p>
             The trade-off is that a wildcard certificate covers all subdomains indiscriminately.
             If you prefer to issue a separate certificate per service (which gives you more
-            granular expiry and revocation control), you can &mdash; just add each service as
+            granular expiry and revocation control), you can - just add each service as
             its own certificate entry in the ACME client. Both approaches work with HAProxy.
           </p>
 
@@ -331,7 +331,7 @@
           <p>
             This is a production-grade HTTPS setup running entirely on your home router,
             made practical by a YouFibre FTTP connection with a static IP. The total
-            additional cost is zero &mdash; ACME, Let&rsquo;s Encrypt, and Cloudflare DNS
+            additional cost is zero - ACME, Let&rsquo;s Encrypt, and Cloudflare DNS
             are all free, and HAProxy is included in the OPNsense plugin ecosystem at
             no charge.
           </p>
@@ -351,8 +351,8 @@
             <p><strong>Series: Self-Hosting with OPNsense and HAProxy</strong></p>
             <ol>
               <li><a href="reverse-proxy-explained.html">Part 1: What is a reverse proxy? Self-hosting explained</a></li>
-              <li><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</a></li>
-              <li><strong>Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</strong> &mdash; you are here</li>
+              <li><a href="haproxy-opnsense-reverse-proxy.html">Part 2: HAProxy on OPNsense - configuring your reverse proxy</a></li>
+              <li><strong>Part 3: HTTPS for self-hosted services - ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</strong> - you are here</li>
             </ol>
           </nav>
 

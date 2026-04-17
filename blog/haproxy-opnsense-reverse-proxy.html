@@ -4,28 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HAProxy on OPNsense — Configuring Your Reverse Proxy | YouFibreGuide</title>
+  <title>HAProxy on OPNsense - Configuring Your Reverse Proxy | YouFibreGuide</title>
   <meta name="description" content="Step-by-step guide to installing and configuring HAProxy on OPNsense as a reverse proxy. Covers frontends, backends, ACLs, and routing multiple services on a single IP.">
   <meta name="author" content="Iain, Cirrotech Ltd">
 
   <link rel="canonical" href="https://www.myyoufibreguide.com/blog/haproxy-opnsense-reverse-proxy.html">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="HAProxy on OPNsense — Configuring Your Reverse Proxy | YouFibreGuide">
+  <meta property="og:title" content="HAProxy on OPNsense - Configuring Your Reverse Proxy | YouFibreGuide">
   <meta property="og:description" content="Step-by-step guide to installing and configuring HAProxy on OPNsense as a reverse proxy for self-hosted services. Frontends, backends, ACLs, and hostname-based routing explained.">
   <meta property="og:url" content="https://www.myyoufibreguide.com/blog/haproxy-opnsense-reverse-proxy.html">
   <meta property="article:published_time" content="2026-03-08">
   <meta property="article:author" content="Iain">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="HAProxy on OPNsense — Configuring Your Reverse Proxy">
+  <meta name="twitter:title" content="HAProxy on OPNsense - Configuring Your Reverse Proxy">
   <meta name="twitter:description" content="Step-by-step: install the HAProxy plugin on OPNsense and configure frontends, backends, and ACLs to route multiple self-hosted services by hostname.">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "HAProxy on OPNsense — Configuring Your Reverse Proxy",
+    "headline": "HAProxy on OPNsense - Configuring Your Reverse Proxy",
     "description": "Step-by-step guide to installing and configuring HAProxy on OPNsense as a reverse proxy. Covers frontends, backends, ACLs, and routing multiple services on a single IP.",
     "datePublished": "2026-03-08",
     "dateModified": "2026-03-08",
@@ -105,11 +105,11 @@
             <time datetime="2026-03-08">8 March 2026</time>
             <span class="blog-card__tag">Self-Hosting</span>
           </div>
-          <h1 id="post-heading">HAProxy on OPNsense &mdash; configuring your reverse proxy</h1>
+          <h1 id="post-heading">HAProxy on OPNsense - configuring your reverse proxy</h1>
           <p class="blog-post__series-note">
-            Part 2 of 3 &mdash; <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
+            Part 2 of 3 - <strong>Self-Hosting with OPNsense and HAProxy</strong><br>
             <a href="reverse-proxy-explained.html">&larr; Part 1: What is a reverse proxy? Self-hosting explained</a><br>
-            <a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS &rarr;</a>
+            <a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services - ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS &rarr;</a>
           </p>
         </div>
 
@@ -143,7 +143,7 @@
             </div>
             <div class="glossary__item">
               <dt>ACL (Access Control List)</dt>
-              <dd>A rule. ACLs let HAProxy match incoming requests against conditions &mdash; most commonly the hostname in the request. An ACL rule like &ldquo;if the hostname is blog.example.com&rdquo; is what lets HAProxy decide which backend to use.</dd>
+              <dd>A rule. ACLs let HAProxy match incoming requests against conditions - most commonly the hostname in the request. An ACL rule like &ldquo;if the hostname is blog.example.com&rdquo; is what lets HAProxy decide which backend to use.</dd>
             </div>
             <div class="glossary__item">
               <dt>Server</dt>
@@ -181,7 +181,7 @@
               name (e.g. <code>nextcloud_server</code>), set the IP address to the internal
               address of the machine running the service (e.g. <code>192.168.1.50</code>), and
               set the port to the port the service is listening on (e.g. <code>8080</code>).
-              Leave SSL unchecked for now &mdash; the proxy handles TLS termination; the
+              Leave SSL unchecked for now - the proxy handles TLS termination; the
               backend connection stays on the LAN and can be plain HTTP unless the service
               requires otherwise.
             </li>
@@ -210,7 +210,7 @@
             <li><strong>Type:</strong> <code>SSL / HTTPS (TCP mode)</code>. This enables TLS termination at the proxy.</li>
             <li>
               <strong>Default Backend Pool:</strong> Set this to a backend that returns a sensible
-              error, or leave it empty &mdash; any request that doesn't match an ACL rule will
+              error, or leave it empty - any request that doesn't match an ACL rule will
               fall here. I use a backend pointing to a simple holding page.
             </li>
             <li>
@@ -285,7 +285,7 @@
           <p>
             If you get a connection refused error, check that the firewall rule is in place
             and that HAProxy is running. If you get a 502 Bad Gateway, the frontend is
-            working but HAProxy can't reach the backend &mdash; check the internal IP and port
+            working but HAProxy can't reach the backend - check the internal IP and port
             in your Real Server configuration.
           </p>
 
@@ -303,7 +303,7 @@
             Unbound (<strong>Services &rarr; Unbound DNS &rarr; Host Overrides</strong>), add
             an override for each hostname pointing to the LAN IP of the OPNsense box. Traffic
             from inside the LAN will then go directly to OPNsense, which routes it to HAProxy,
-            which routes it to the backend &mdash; no hairpin needed.
+            which routes it to the backend - no hairpin needed.
           </p>
 
           <div class="blog-post__referral">
@@ -321,8 +321,8 @@
             <p><strong>Series: Self-Hosting with OPNsense and HAProxy</strong></p>
             <ol>
               <li><a href="reverse-proxy-explained.html">Part 1: What is a reverse proxy? Self-hosting explained</a></li>
-              <li><strong>Part 2: HAProxy on OPNsense &mdash; configuring your reverse proxy</strong> &mdash; you are here</li>
-              <li><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services &mdash; ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</a></li>
+              <li><strong>Part 2: HAProxy on OPNsense - configuring your reverse proxy</strong> - you are here</li>
+              <li><a href="acme-letsencrypt-cloudflare-opnsense.html">Part 3: HTTPS for self-hosted services - ACME, Let&rsquo;s Encrypt &amp; Cloudflare DNS</a></li>
             </ol>
           </nav>
 

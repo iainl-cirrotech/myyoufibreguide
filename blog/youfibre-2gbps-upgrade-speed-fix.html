@@ -109,7 +109,7 @@
             A pattern I've seen repeatedly: someone upgrades from You1000 to You2000, runs a
             speed test, and gets approximately 940 Mbps. They assume YouFibre haven't applied
             the upgrade correctly and raise a support ticket. In the vast majority of cases, the
-            line is delivering 2 Gbps just fine — the bottleneck is somewhere in the user's own
+            line is delivering 2 Gbps just fine - the bottleneck is somewhere in the user's own
             hardware or configuration.
           </p>
           <p>
@@ -121,7 +121,7 @@
           <p>
             Before anything else: ignore Wi-Fi speed tests entirely until you've confirmed the
             line speed over Ethernet. Even Wi-Fi 6E or Wi-Fi 7 devices will struggle to hit a
-            consistent 2 Gbps — there are too many variables involved (channel congestion,
+            consistent 2 Gbps - there are too many variables involved (channel congestion,
             client capability, distance, interference). If you can't see 2 Gbps via a wired
             connection, you won't see it over Wi-Fi either. Confirm the wired result first, then
             investigate wireless separately if needed.
@@ -144,13 +144,13 @@
           </p>
           <p>
             The fix is either a USB-to-2.5GbE adapter or a PCIe 2.5 GbE NIC. If you go the
-            USB route, make sure you're plugging into a USB 3 port — they're typically coloured
+            USB route, make sure you're plugging into a USB 3 port - they're typically coloured
             blue and labelled SS (SuperSpeed). USB 2 doesn't have enough bandwidth.
           </p>
 
           <h2>3. Check your cables</h2>
           <p>
-            For 2.5 Gbps, you need at least a Cat5e cable — and that covers most cable runs
+            For 2.5 Gbps, you need at least a Cat5e cable - and that covers most cable runs
             made in the last 20 years. However, not all cables are labelled, and even in 2026
             some manufacturers include Cat5 cables in the box with new hardware. I recently
             received a Cat5 cable bundled with a new device released just a month prior.
@@ -185,7 +185,7 @@
           <p>
             Many routers include a Quality of Service (QoS) or traffic management feature
             that prioritises latency-sensitive traffic (video calls, gaming) over bulk
-            transfers. To work correctly, QoS needs to know your connection's maximum speed —
+            transfers. To work correctly, QoS needs to know your connection's maximum speed -
             and that figure is often set automatically during initial setup by running a speed
             test at the time.
           </p>
@@ -206,7 +206,7 @@
           <p>
             Speedtest.net has a native Windows app that tends to produce more consistent
             results at these speeds. For a more technical test, public iperf3 servers are a
-            useful option — they test raw TCP throughput without the overhead of a web
+            useful option - they test raw TCP throughput without the overhead of a web
             interface.
           </p>
 
@@ -214,7 +214,7 @@
           <p>
             If your PC has a 2.5 GbE or 10 GbE port, your cables are good, your router has
             2.5 GbE on both WAN and LAN, QoS is disabled, and you're still seeing exactly
-            ~940 Mbps — the issue may be the ONT (the small fibre termination box on the
+            ~940 Mbps - the issue may be the ONT (the small fibre termination box on the
             wall, often an Adtran unit). The ONT doesn't always automatically apply a new
             speed profile after a package upgrade.
           </p>

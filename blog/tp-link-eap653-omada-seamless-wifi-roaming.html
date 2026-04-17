@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TP-Link EAP653 Omada Wi-Fi 6 - Single SSID &amp; Seamless Roaming | YouFibreGuide</title>
+  <meta name="description" content="How to configure multiple TP-Link EAP653 Omada Wi-Fi 6 access points to share a single SSID and deliver seamless roaming throughout the house. No handoff drops, no manual reconnecting.">
+  <meta name="author" content="Iain, Cirrotech Ltd">
+
+  <link rel="canonical" href="https://www.myyoufibreguide.com/blog/tp-link-eap653-omada-seamless-wifi-roaming.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TP-Link EAP653 Omada Wi-Fi 6 - Single SSID &amp; Seamless Roaming | YouFibreGuide">
+  <meta property="og:description" content="How to configure multiple TP-Link EAP653 Omada access points to share a single SSID and deliver seamless roaming throughout the house.">
+  <meta property="og:url" content="https://www.myyoufibreguide.com/blog/tp-link-eap653-omada-seamless-wifi-roaming.html">
+  <meta property="article:published_time" content="2025-12-15">
+  <meta property="article:author" content="Iain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TP-Link EAP653 Omada Wi-Fi 6 - Single SSID &amp; Seamless Roaming">
+  <meta name="twitter:description" content="How to configure multiple TP-Link EAP653 Omada access points to share a single SSID and deliver seamless roaming throughout the house.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "TP-Link EAP653 Omada Wi-Fi 6 - Single SSID and Seamless Roaming",
+    "description": "How to configure multiple TP-Link EAP653 Omada Wi-Fi 6 access points to share a single SSID and deliver seamless roaming throughout the house. Covers Omada controller setup, fast roaming (802.11r), band steering, and client isolation.",
+    "datePublished": "2025-12-15",
+    "dateModified": "2025-12-15",
+    "url": "https://www.myyoufibreguide.com/blog/tp-link-eap653-omada-seamless-wifi-roaming.html",
+    "author": {
+      "@type": "Person",
+      "name": "Iain",
+      "jobTitle": "IT Consultant",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cirrotech Ltd"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "YouFibreGuide",
+      "url": "https://www.myyoufibreguide.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.myyoufibreguide.com/blog/tp-link-eap653-omada-seamless-wifi-roaming.html"
+    },
+    "keywords": ["TP-Link EAP653", "Omada", "Wi-Fi 6", "seamless roaming", "single SSID", "802.11r", "fast roaming", "access point", "home network", "band steering"]
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3RXV3BT7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'wait_for_update': 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F3RXV3BT7F');
+  </script>
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="alternate" type="application/rss+xml" title="YouFibreGuide Blog" href="../feed.xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="independence-bar" role="note">
+    <span>Independent personal review. Not affiliated with YouFibre Ltd.</span>
+    <a href="../index.html#footer-disclaimer" class="independence-bar__link">About this site</a>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        <a href="../index.html" class="site-header__logo">YouFibre<span class="accent">Guide</span></a>
+        <nav class="site-header__nav" aria-label="Page navigation">
+          <a href="../index.html#review">Review</a>
+          <a href="../index.html#setup">Setup</a>
+          <a href="../index.html#referral">Referral</a>
+          <a href="../blog.html">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <article class="section section--alt blog-post" aria-labelledby="post-heading">
+      <div class="container">
+
+        <div class="blog-post__header">
+          <div class="blog-post__meta">
+            <time datetime="2025-12-15">15 December 2025</time>
+            <span class="blog-card__tag">Wi-Fi &amp; Networking</span>
+          </div>
+          <h1 id="post-heading">TP-Link EAP653 Omada Wi-Fi 6 - single SSID and seamless roaming</h1>
+        </div>
+
+        <div class="blog-post__body">
+
+          <p>
+            One of the most noticeable upgrades to the home network alongside the YouFibre
+            installation was switching from a single consumer router with Wi-Fi to a proper
+            multi-AP setup using TP-Link's Omada EAP653 access points. The difference in
+            coverage and roaming behaviour was immediate and substantial.
+          </p>
+          <p>
+            This post covers how I have them configured: a single SSID across the whole
+            house, fast handoff between access points as you move room to room, and central
+            management through the Omada controller. No more manually switching between
+            networks or having a phone stubbornly hold onto a weak AP signal from two
+            floors away.
+          </p>
+
+          <h2>Why multiple access points instead of a mesh system?</h2>
+          <p>
+            Consumer mesh systems are convenient, but they typically use a wireless
+            backhaul between nodes, which eats into the available bandwidth and introduces
+            additional latency. In a house already wired with Cat6A Ethernet to every room,
+            using a wired backhaul is the obvious choice. Each EAP653 connects via a
+            dedicated Ethernet run back to the core switch - clean, fast, and with no
+            wireless backhaul overhead.
+          </p>
+          <p>
+            The EAP653 is a ceiling-mount Wi-Fi 6 (802.11ax) access point with a 2.5GbE
+            uplink port. That wired uplink matters at YouFibre speeds - a standard
+            Gigabit port would be a bottleneck on a 2 Gbps connection. With 2.5GbE, the
+            AP itself is no longer the limiting factor.
+          </p>
+
+          <h2>What the Omada controller does</h2>
+          <p>
+            The Omada controller is the central management layer for all the access points.
+            Without it, each EAP operates independently and you would need to configure
+            them individually. With the controller, you define your SSIDs, security
+            settings, and roaming parameters once, and they are pushed to every AP
+            automatically.
+          </p>
+          <p>
+            I run the Omada controller as a Docker container on a home server, which means
+            it's always available without needing a dedicated Omada hardware controller.
+            TP-Link also offer a cloud-based option and a standalone hardware controller,
+            but the software controller works well if you have somewhere suitable to run it.
+          </p>
+
+          <h2>Single SSID across all access points</h2>
+          <p>
+            The starting point for seamless roaming is making sure every access point
+            broadcasts the exact same SSID and uses the same security credentials
+            (WPA2/WPA3, same passphrase). In the Omada controller, this is done through
+            a <strong>Wireless Network</strong> profile:
+          </p>
+          <ol>
+            <li>In the Omada controller, go to <strong>Settings &rarr; Wireless Networks</strong></li>
+            <li>Create a new wireless network with your chosen SSID name</li>
+            <li>Set the security mode (WPA2/WPA3 Personal recommended) and passphrase</li>
+            <li>Apply the network to all access points in the site</li>
+          </ol>
+          <p>
+            Each AP will broadcast the same SSID. From a device's perspective, it looks
+            like one single Wi-Fi network wherever it is in the house.
+          </p>
+
+          <h2>Fast roaming with 802.11r</h2>
+          <p>
+            Having the same SSID on every AP is necessary but not sufficient for seamless
+            roaming. Without fast roaming, a device switching from one AP to another has
+            to complete a full re-authentication, which takes long enough to drop a video
+            call or interrupt a Teams session mid-sentence.
+          </p>
+          <p>
+            The 802.11r amendment (Fast BSS Transition, or FT) solves this by
+            pre-caching authentication credentials across APs so that the handoff
+            completes in milliseconds rather than seconds. In Omada, it is enabled per
+            wireless network:
+          </p>
+          <ol>
+            <li>Open the wireless network you created above</li>
+            <li>Under <strong>Advanced Settings</strong>, enable <strong>Fast Roaming</strong></li>
+            <li>Save and apply</li>
+          </ol>
+          <p>
+            Most modern devices (phones, laptops, tablets) support 802.11r. Older devices
+            that do not support it will still connect normally; they just won't get the
+            faster handoff. In practice, everything in a typical household handles it fine.
+          </p>
+
+          <h2>Band steering</h2>
+          <p>
+            The EAP653 is a dual-band AP, broadcasting on both 2.4 GHz and 5 GHz.
+            For seamless roaming and best performance, you want capable devices to use 5 GHz
+            where signal permits, and fall back to 2.4 GHz only when they're far enough
+            away from an AP that 5 GHz isn't usable.
+          </p>
+          <p>
+            Omada's band steering feature nudges capable dual-band clients towards the 5 GHz
+            band. Enable it in <strong>Settings &rarr; Wireless Networks &rarr; [your
+            network] &rarr; Advanced Settings &rarr; Band Steering</strong>. Leave the
+            default threshold settings unless you have a specific reason to change them.
+          </p>
+          <p>
+            It's worth noting that band steering and fast roaming work at different layers
+            and complement each other - band steering decides which frequency band a
+            device uses on a given AP, while fast roaming handles the handoff when a device
+            moves to a different AP entirely.
+          </p>
+
+          <h2>Beacon interval and DTIM period</h2>
+          <p>
+            The default Beacon Interval (100ms) and DTIM Period (1) work well for most
+            households. If you have battery-sensitive IoT devices or mobile phones that
+            you want to sleep more efficiently, you can increase the DTIM period to 3,
+            which allows devices to sleep longer between checking for buffered frames.
+            For a home network with a mix of devices, the defaults are fine.
+          </p>
+
+          <h2>Minimum RSSI (client signal threshold)</h2>
+          <p>
+            One of the most practically useful settings in Omada is the minimum RSSI
+            (Received Signal Strength Indicator) threshold. By default, an AP will hold
+            onto a connected client even when the signal is very weak, because it's still
+            technically able to serve the connection - just poorly.
+          </p>
+          <p>
+            Setting a minimum RSSI tells the AP to refuse connections from clients whose
+            signal falls below a certain level, which forces those clients to roam to a
+            closer AP that can serve them properly.
+          </p>
+          <p>
+            In <strong>Settings &rarr; Wireless Networks &rarr; [your network] &rarr; Advanced
+            Settings</strong>, enable <strong>BSS Transition</strong> and set a minimum RSSI
+            value. A value around &minus;75 dBm is a reasonable starting point for a house
+            with good AP placement. If a device stubbornly holds onto a weak AP in a
+            specific spot, lower the threshold slightly (to &minus;70 dBm) to force an
+            earlier handoff.
+          </p>
+          <p>
+            This, combined with 802.11r, is what makes the roaming feel genuinely seamless
+            rather than just functional.
+          </p>
+
+          <h2>AP placement</h2>
+          <p>
+            For a multi-floor house, I have one EAP653 per floor, ceiling-mounted near the
+            centre of each level to maximise coverage. Ceiling mounting is intentional
+            - the EAP653's antenna pattern is designed for ceiling installation and
+            radiates outward and downward rather than in a sphere from a wall-mounted
+            position.
+          </p>
+          <p>
+            The goal is overlapping coverage without excessive overlap. You want a device
+            mid-staircase to have a usable signal from at least two APs, so it has
+            somewhere to roam to. You do not want so much overlap that devices constantly
+            receive competing signals of similar strength and can't decide which AP to use.
+            In practice, one AP per floor in most UK houses achieves this balance well.
+          </p>
+
+          <h2>IoT separation with a guest or VLAN network</h2>
+          <p>
+            While not strictly related to roaming, it's worth mentioning that Omada makes
+            it straightforward to create a second SSID mapped to a separate VLAN for IoT
+            devices. Smart plugs, bulbs, and similar devices often have weaker security
+            than laptops and phones - keeping them on a separate network segment
+            limits what they can reach if they're ever compromised.
+          </p>
+          <p>
+            The process is the same as creating the main wireless network: define a new
+            SSID, assign it to a VLAN, and apply it to all APs. On the OPNsense side,
+            create a corresponding VLAN interface with appropriate firewall rules to
+            restrict access.
+          </p>
+
+          <h2>The result</h2>
+          <p>
+            With this configuration in place, moving through the house with a phone or
+            laptop feels exactly as it should: the Wi-Fi connection stays up, video calls
+            don't drop, and there's no need to manually switch networks or nudge the device
+            to reconnect. The handoff between APs is fast enough that most devices don't
+            register it as a disconnect at all.
+          </p>
+          <p>
+            Combined with the YouFibre 2 Gbps connection upstream, this setup delivers
+            speeds that genuinely saturate Wi-Fi 6 in normal use. The speed test below was
+            run on a phone connected over Wi-Fi to an EAP653 - no Ethernet involved.
+          </p>
+
+          <div class="image-grid image-grid--single">
+            <figure class="image-card">
+              <a href="../images/speedtestWiFi.PNG" class="lightbox-trigger" aria-label="View full size: Speedtest result showing 1648 Mbps download and 1662 Mbps upload over Wi-Fi">
+                <img
+                  src="../images/speedtestWiFi.PNG"
+                  alt="Speedtest result on a phone over Wi-Fi 6: 1648 Mbps download, 1662 Mbps upload via TP-Link EAP653 Omada access point"
+                  class="image-card__img"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              </a>
+            </figure>
+          </div>
+          <p class="image-section__caption">
+            1648 Mbps down, 1662 Mbps up - tested on a phone over Wi-Fi 6 via a ceiling-mounted EAP653. Both figures marked as personal bests by the Speedtest app.
+          </p>
+
+          <p>
+            The upload figure actually exceeds the download here, which reflects how
+            well Wi-Fi 6 handles symmetrical loads - a direct benefit of the
+            YouFibre connection's symmetrical speeds flowing through to wireless clients.
+            For most devices in daily use, Wi-Fi 6 is no longer the bottleneck.
+          </p>
+          <p>
+            The EAP653s themselves have been running without requiring any attention since
+            installation. The Omada controller reports uptime, client counts, and any
+            rogue AP detections, but there has been nothing to act on. It's the kind of
+            infrastructure that disappears into the background, which is exactly what you
+            want.
+          </p>
+
+          <div class="blog-post__referral">
+            <p>
+              If you're not yet on YouFibre and this has been useful, you can use my referral
+              code <strong>KCR5KH</strong> when you sign up. Both of us may receive a reward
+              once your installation is complete.
+            </p>
+            <a href="https://www.youfibre.com/check-availability/" class="btn btn--primary" onclick="trackReferralClick()" target="_blank" rel="noopener noreferrer">
+              Check Availability at YouFibre
+            </a>
+          </div>
+        </div>
+
+        <p style="margin-top: 2rem;"><a href="../blog.html">&larr; Back to blog</a></p>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+
+        <p class="site-footer__disclaimer" id="footer-disclaimer">
+          <strong>Independent review.</strong> This site is not affiliated with, sponsored
+          by, or officially endorsed by YouFibre Ltd. This is a personal review based on my
+          own experience as a paying customer. Always check
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre's official website</a>
+          for current prices, availability, and referral terms.
+        </p>
+
+        <nav class="site-footer__links" aria-label="Footer links">
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="../cookie-policy.html">Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.youfibre.com" target="_blank" rel="noopener noreferrer">YouFibre Official Site</a>
+        </nav>
+
+        <p class="site-footer__copy">
+          &copy; <span id="currentYear"></span> YouFibreGuide. Independent personal review site.
+        </p>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+    Code copied to clipboard!
+  </div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
+    <p class="cookie-banner__text">
+      This site uses Google Analytics to understand how visitors use it; nothing is sold
+      or shared. You can decline and the site will work normally.
+    </p>
+    <div class="cookie-banner__actions">
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Accept Analytics</button>
+      <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
